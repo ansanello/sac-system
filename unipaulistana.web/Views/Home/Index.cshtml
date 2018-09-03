@@ -1,4 +1,6 @@
-﻿@{
+﻿@model unipaulistana.model.Login
+
+@{
     Layout = null;
     ViewData["Title"] = "Home Page";
 }
@@ -46,19 +48,24 @@
 		<div class="container">
 			<div class="row">
 				<div class="module module-login span4 offset4">
-					<form class="form-vertical">
+					<form  asp-action="Index" class="form-vertical">
 						<div class="module-head">
 							<h3>Entre com os seus dados de acesso</h3>
 						</div>
+							@if(TempData["UserLoginFailed"] != null){
+								<p style="color:red;">email ou senha inválida</p>
+							}
 						<div class="module-body">
 							<div class="control-group">
 								<div class="controls row-fluid">
-									<input class="span12" type="text" id="inputEmail" placeholder="Nome do usuário">
+									<input asp-for="Email" class="span12" type="text" id="inputEmail" placeholder="email">
+									<span asp-validation-for="Email" class="text-danger"></span>
 								</div>
 							</div>
 							<div class="control-group">
 								<div class="controls row-fluid">
-									<input class="span12" type="password" id="inputPassword" placeholder="Senha">
+									<input asp-for="Senha" class="span12" type="password" id="inputPassword" placeholder="senha">
+									<span asp-validation-for="Senha" class="text-danger"></span>
 								</div>
 							</div>
 						</div>
@@ -85,7 +92,12 @@
 			<b class="copyright">&copy; 2018 SAC - http://www.unipaulistana.edu.br/ </b> Todos os direitos reservados.
 		</div>
 	</div>
-	<script src="js/jquery-1.9.1.min.js" type="text/javascript"></script>
-	<script src="js/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
-	<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+	<script src="@Url.Content("~/js/jquery-1.9.1.min.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/js/jquery-ui-1.10.1.custom.min.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/bootstrap/js/bootstrap.min.js")" type="text/javascript"></script>
 </body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

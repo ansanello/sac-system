@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v2.0/",
-    "signature": "2468f8819b4e290b1a8667020137de51bd83af19"
+    "signature": "1568b76c56028db79bcdc70a4171f777bb3ec9bc"
   },
   "compilationOptions": {},
   "targets": {
@@ -22,7 +22,15 @@
           "Microsoft.NETCore.Platforms": "1.1.0"
         }
       },
+      "System.ComponentModel.Annotations/4.5.0": {
+        "runtime": {
+          "lib/netstandard2.0/System.ComponentModel.Annotations.dll": {}
+        }
+      },
       "unipaulistana.model/1.0.0": {
+        "dependencies": {
+          "System.ComponentModel.Annotations": "4.5.0"
+        },
         "runtime": {
           "unipaulistana.model.dll": {}
         }
@@ -48,6 +56,13 @@
       "sha512": "sha512-oA6nwv9MhEKYvLpjZ0ggSpb1g4CQViDVQjLUcDWg598jtvJbpfeP2reqwI1GLW2TbxC/Ml7xL6BBR1HmKPXlTg==",
       "path": "netstandard.library/2.0.1",
       "hashPath": "netstandard.library.2.0.1.nupkg.sha512"
+    },
+    "System.ComponentModel.Annotations/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IjDa643EO77A4CL9dhxfZ6zzGu+pM8Ar0NYPRMN3TvDiga4uGDzFHOj/ArpyNxxKyO5IFT2LZ0rK3kUog7g3jA==",
+      "path": "system.componentmodel.annotations/4.5.0",
+      "hashPath": "system.componentmodel.annotations.4.5.0.nupkg.sha512"
     },
     "unipaulistana.model/1.0.0": {
       "type": "project",

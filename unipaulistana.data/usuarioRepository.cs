@@ -40,13 +40,30 @@ namespace unipaulistana.model
             return usuario;
         }
 
+        public Usuario Login(string email, string senha)
+        {
+            string sql = string.Format("select * from usuario where email='{0}' and senha='{1}'", email, senha);
+            var cmd = new SqlCommand(sql, this.conexao.ObterConexao());
+            SqlDataReader sqlDataReader = cmd.ExecuteReader();
+
+            var usuario = new Usuario();
+            while (sqlDataReader.Read())
+            {
+                usuario = new Usuario( Convert.ToInt32(sqlDataReader.GetValue(0)), sqlDataReader.GetValue(1).ToString(),
+                                                       sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(),
+                                                       sqlDataReader.GetValue(4).ToString());
+            }
+            return usuario;
+        }
+
         public void Adicionar(Usuario usuario)
         {
-            string query = "insert into dbo.usuario (Nome) VALUES (@Nome, @Email, @Senha) ";
+            string query = "insert into dbo.usuario (Nome, Email, Senha, Foto) VALUES (@Nome, @Email, @Senha, @Foto) ";
             var cmd = new SqlCommand(query, this.conexao.ObterConexao());
             cmd.Parameters.Add("@Nome", SqlDbType.VarChar, 255).Value = usuario.Nome;
             cmd.Parameters.Add("@Email", SqlDbType.VarChar, 255).Value = usuario.Email;
             cmd.Parameters.Add("@Senha", SqlDbType.VarChar, 10).Value = usuario.Senha;
+            cmd.Parameters.Add("@Foto", SqlDbType.VarChar, 10).Value = "user.png";
             cmd.ExecuteNonQuery();
         } 
 

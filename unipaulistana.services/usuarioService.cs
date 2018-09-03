@@ -32,5 +32,8 @@ namespace unipaulistana.model
         {
             this.repository.Excluir(usuarioID);
         } 
+
+        public Usuario Login(string email, string senha)
+            => this.repository.Login(email, senha);
     }
 }

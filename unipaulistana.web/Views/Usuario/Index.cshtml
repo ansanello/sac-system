@@ -1,4 +1,4 @@
-﻿@model IEnumerable<unipaulistana.model.Cliente>  
+﻿@model IEnumerable<unipaulistana.model.Usuario>  
 
 <br/>
 
@@ -6,7 +6,7 @@
 
 <div class="top-buffer"></div>  
 <div class="panel panel-primary">  
-    <h3>Lista de clientes</h3>
+    <h3>Lista de usuários</h3>
     <div class="panel-body">  
         <div class="btn-group">  
             <a id="createEditCustomerModal" asp-action="Criar" class="btn btn-primary">  
@@ -24,7 +24,8 @@
             <thead>  
                 <tr>
                     <th>ID</th>  
-                    <th>Nome</th>                      
+                    <th>Nome</th> 
+                    <th>Email</th>                      
                     <th></th>  
                 </tr>  
             </thead>  
@@ -32,13 +33,14 @@
                 @foreach (var item in Model)  
                 {  
                     <tr>  
-                        <td>@Html.DisplayFor(modelItem => item.ClienteID)</td>  
+                        <td>@Html.DisplayFor(modelItem => item.UsuarioID)</td>  
                         <td>@Html.DisplayFor(modelItem => item.Nome)</td>  
+                        <td>@Html.DisplayFor(modelItem => item.Email)</td>  
                         <td>  
-                            <a id="editCustomerModal" asp-action="Alterar" asp-route-id= "@item.ClienteID" class="btn btn-info">  
+                            <a id="editarUsuario" asp-action="Alterar" asp-route-id= "@item.UsuarioID" class="btn btn-info">  
                                 <i class="glyphicon glyphicon-pencil"></i>  Alterar  
                             </a>  
-                            <a id="deleteCustomerModal" asp-action="Excluir" asp-route-id= "@item.ClienteID" class="btn btn-danger">  
+                            <a id="ExcluirUsuario" asp-action="Excluir" asp-route-id= "@item.UsuarioID" class="btn btn-danger">  
                                 <i class="glyphicon glyphicon-trash"></i>  Excluir  
                             </a>  
                         </td>  

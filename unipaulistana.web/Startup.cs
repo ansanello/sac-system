@@ -24,6 +24,8 @@
         {
             services.AddMvc();
             services.AddOptions();
+            services.AddMvc(options => options.MaxModelValidationErrors = 50);
+
             services.Configure<AppConnectionSettings>(options => Configuration.GetSection("ConnectionStrings").Bind(options));
 
             services.AddScoped<ConexaoContext>();

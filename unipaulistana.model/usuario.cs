@@ -1,6 +1,7 @@
 namespace unipaulistana.model
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class Usuario : Base
     { 
@@ -14,9 +15,38 @@ namespace unipaulistana.model
             this.Senha = senha;
         }
 
+        public Usuario(int usuarioID, string nome, string email, string senha, string foto)
+        {
+            this.UsuarioID = usuarioID;
+            this.Nome = nome;
+            this.Email = email;
+            this.Senha = senha;
+            this.Foto = foto;
+        }
+
         public int UsuarioID { get; set; }
+
+        [Required(ErrorMessage="O campo nome é obrigatório")]
         public string Nome { get; set; }
+
+        public string Foto { get; set; }
+
+        [Required(ErrorMessage="O campo email é obrigatório")]
+        [DataType(DataType.EmailAddress, ErrorMessage="Informe um email válido.")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage="O campo senha é requerido.")]
+        [StringLength(10, ErrorMessage = "O tamanho da senha deve conter entre 5 e 10 caracteres", MinimumLength = 5)]
+        [DataType(DataType.Password)]
         public string Senha { get; set; }
+
+        [Required(ErrorMessage="O campo confirmar senha é requerido.")]
+        [StringLength(10, ErrorMessage = "O tamanho da senha deve conter entre 5 e 10 caracteres", MinimumLength = 5)]
+        [DataType(DataType.Password)]
+        [Compare("Senha", ErrorMessage="A senha informada não é igual a senha confirmada.")]
+        public string ConfirmarSenha { get; set; }
+
+        public bool ContemUsuario()
+            => this != null && this.UsuarioID != 0;
     }
 }

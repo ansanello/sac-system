@@ -10,5 +10,6 @@ namespace unipaulistana.model
         void Adicionar(Usuario usuario);
         void Atualizar(Usuario usuario);
         void Excluir(int usuarioID);
+        Usuario Login(string email, string senha);
     } 
 }

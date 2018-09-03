@@ -8,14 +8,14 @@ namespace unipaulistana.web.Controllers
     using Microsoft.AspNetCore.Mvc;
     using unipaulistana.model;
 
-    public class ClienteController : Controller
+    public class UsuarioController : Controller
     {
-        public ClienteController(IClienteService clienteService)
+        public UsuarioController(IUsuarioService usuarioService)
         {
-            this.clienteService = clienteService;
+            this.usuarioService = usuarioService;
         }
 
-        readonly IClienteService clienteService;
+        readonly IUsuarioService usuarioService;
 
         public IActionResult Index()
         { 
@@ -24,7 +24,7 @@ namespace unipaulistana.web.Controllers
                 ViewBag.Sucesso = TempData["mensagemIndex"];
             } 
 
-            return View(this.clienteService.ObterTodos());
+            return View(this.usuarioService.ObterTodos());
         }
         
         public IActionResult Criar()
@@ -33,15 +33,15 @@ namespace unipaulistana.web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar(Cliente dados)
+        public IActionResult Criar(Usuario dados)
         {
-            if (!ModelState.RemoveKeyModelState("ClienteID").IsValid)
+            if (!ModelState.IsValid)
                 return View(dados);
 
             try
             {
-                this.clienteService.Adicionar(dados);
-                TempData["mensagemIndex"] = "Cliente inserido com sucesso."; 
+                this.usuarioService.Adicionar(dados);
+                TempData["mensagemIndex"] = "Usuário inserido com sucesso."; 
                 return RedirectToAction("Index");
             }
             catch(Exception ex)
@@ -58,20 +58,20 @@ namespace unipaulistana.web.Controllers
                 ViewBag.Sucesso = TempData["mensagemEdicao"];
             } 
 
-            return View(this.clienteService.ObterPorID(id));
+            return View(this.usuarioService.ObterPorID(id));
         }
 
         [HttpPost]
-        public IActionResult Alterar(Cliente dados)
+        public IActionResult Alterar(Usuario dados)
         {
             if (!ModelState.IsValid)
                 return View(dados);
 
             try
             {
-                this.clienteService.Atualizar(dados);
-                TempData["mensagemEdicao"] = "Cliente atualizado com sucesso."; 
-                return RedirectToAction("Alterar", dados.ClienteID);
+                this.usuarioService.Atualizar(dados);
+                TempData["mensagemEdicao"] = "Usuário atualizado com sucesso."; 
+                return RedirectToAction("Alterar", dados.UsuarioID);
             }
             catch(Exception ex)
             {
@@ -82,16 +82,16 @@ namespace unipaulistana.web.Controllers
 
         public IActionResult Excluir(int id)
         {
-            return View(this.clienteService.ObterPorID(id));
+            return View(this.usuarioService.ObterPorID(id));
         }
 
         [HttpPost]
-        public ActionResult Excluir(Cliente dados)
+        public ActionResult Excluir(Usuario dados)
         {
             try
             {
-                this.clienteService.Excluir(dados.ClienteID);
-                TempData["mensagemIndex"] = "Cliente excluído com sucesso."; 
+                this.usuarioService.Excluir(dados.UsuarioID);
+                TempData["mensagemIndex"] = "Usuário excluído com sucesso."; 
                 return RedirectToAction("Index");
             }
             catch(Exception ex)

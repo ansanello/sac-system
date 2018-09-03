@@ -18,8 +18,6 @@
 		<div class="module-body">
 			<form asp-action="Criar" class="form-horizontal row-fluid">
 				
-				<input type="hidden" asp-for="ClienteID" />
-				
 				<div class="control-group">
 					<label class="control-label" asp-for="Nome">Nome</label>
 						<div class="controls">
@@ -37,6 +35,7 @@
 	</div>				
 </div><!--/.content-->
 		
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
