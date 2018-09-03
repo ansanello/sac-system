@@ -10,7 +10,9 @@
     using unipaulistana.model;
     using System.Security.Claims;
     using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authorization;
 
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         public HomeController(IUsuarioService usuarioService)
@@ -46,7 +48,7 @@
                 var principal = new ClaimsPrincipal(userIdentity);
 
                 HttpContext.SignInAsync(principal);
-                return RedirectToAction("UserHome", "User");
+                return RedirectToAction("Index", "Usuario");
             }
             else
             {
@@ -56,10 +58,10 @@
         }
 
         [HttpGet]  
-        public async Task<IActionResult> Logout()  
+        public IActionResult Logout()  
         {  
-            await HttpContext.SignOutAsync();  
-            return RedirectToAction("UserLogin", "Login");  
+            HttpContext.SignOutAsync(); 
+            return RedirectToAction("Index", "Home");  
         }  
     }
 }

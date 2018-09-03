@@ -7,7 +7,9 @@ namespace unipaulistana.web.Controllers
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using unipaulistana.model;
+    using Microsoft.AspNetCore.Authorization;
 
+    [Authorize]
     public class ClienteController : Controller
     {
         public ClienteController(IClienteService clienteService)

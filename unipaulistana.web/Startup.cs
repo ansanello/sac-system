@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -28,6 +29,12 @@
 
             services.Configure<AppConnectionSettings>(options => Configuration.GetSection("ConnectionStrings").Bind(options));
 
+             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)  
+                    .AddCookie(options =>  
+                    {  
+                        options.LoginPath = "/Home/Index";  
+                    });  
+
             services.AddScoped<ConexaoContext>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IClienteService, ClienteService>();
@@ -37,6 +44,8 @@
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseAuthentication();  
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
