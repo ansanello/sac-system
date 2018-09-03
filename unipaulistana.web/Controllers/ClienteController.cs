@@ -85,7 +85,7 @@ namespace unipaulistana.web.Controllers
             try
             {
                 this.clienteService.Excluir(dados.ClienteID);
-                TempData["mensagemIndex"] = "Cliente exclído com sucesso."; 
+                TempData["mensagemIndex"] = "Cliente excluído com sucesso."; 
                 return RedirectToAction("Index");
             }
             catch(Exception ex)

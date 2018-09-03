@@ -10,4 +10,19 @@ BEGIN
 END
 GO
 
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'usuario'))
+BEGIN
+    CREATE TABLE usuario (
+    usuarioID int IDENTITY(1,1) PRIMARY KEY,
+    Nome varchar(255) NOT NULL,
+    Email varchar(255) NOT NULL,
+    Senha varchar(10) NOT NULL
+);
+END
+GO
 
+IF (NOT EXISTS (SELECT * FROM usuario WHERE Email = 'admin@uni.com.br'))
+BEGIN
+    INSERT INTO usuario (nome, email, senha) values ('admin', 'admin@uni.com.br', '123456')
+END
+GO

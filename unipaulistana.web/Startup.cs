@@ -29,6 +29,8 @@
             services.AddScoped<ConexaoContext>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

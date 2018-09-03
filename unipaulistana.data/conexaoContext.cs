@@ -24,6 +24,6 @@ namespace unipaulistana.data
         }
 
         string urlConexao;
-        static SqlConnection conexao;
+        public static SqlConnection conexao;
     }
 }
