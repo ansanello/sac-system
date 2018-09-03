@@ -9314,7 +9314,7 @@
 			 * variables are all dynamically replaced as the table display updates, and 
 			 * can be freely moved or removed as the language requirements change.
 			 *  @type string
-			 *  @default Showing _START_ to _END_ of _TOTAL_ entries
+			 *  @default Exibindo _START_ to _END_ of _TOTAL_ entradas
 			 *
 			 *  @dtopt Language
 			 *  @name DataTable.defaults.language.info
@@ -9328,7 +9328,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "Exibindo _START_ para _END_ de _TOTAL_ entradas",
 		
 		
 			/**
@@ -9349,7 +9349,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoEmpty": "Showing 0 to 0 of 0 entries",
+			"sInfoEmpty": "Exibindo 0 para 0 de 0 entradas",
 		
 		
 			/**
@@ -9371,7 +9371,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoFiltered": "(filtered from _MAX_ total entries)",
+			"sInfoFiltered": "(filtrando de _MAX_ total de entradas)",
 		
 		
 			/**
@@ -9458,7 +9458,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLengthMenu": "Show _MENU_ entries",
+			"sLengthMenu": "Exibir _MENU_ entradas",
 		
 		
 			/**
@@ -9482,7 +9482,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLoadingRecords": "Loading...",
+			"sLoadingRecords": "Carregando...",
 		
 		
 			/**
@@ -9503,7 +9503,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sProcessing": "Processing...",
+			"sProcessing": "Processando...",
 		
 		
 			/**
@@ -9538,7 +9538,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "Search:",
+			"sSearch": "Pesquisar:",
 		
 		
 			/**
@@ -9585,7 +9585,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sZeroRecords": "No matching records found"
+			"sZeroRecords": "Nenhum registro encontrado"
 		},
 	
 	
