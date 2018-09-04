@@ -34,6 +34,7 @@ namespace unipaulistana.model
             this.Senha = senha;
             this.Foto = foto;
             this.ConfirmarSenha = senha;
+            this.DepartamentoID = departamentoID;
             this.Departamento = new Departamento(departamentoID, nomeDepartamento);
         }
 
@@ -44,6 +45,7 @@ namespace unipaulistana.model
 
         public string Foto { get; set; }
 
+        public int DepartamentoID { get; set; }
         public Departamento Departamento { get; set; }
 
         [Required(ErrorMessage="O campo email é obrigatório")]

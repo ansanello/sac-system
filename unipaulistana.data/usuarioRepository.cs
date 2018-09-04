@@ -32,7 +32,7 @@ namespace unipaulistana.model
         {
             string sql = string.Format(@"select a.*, b.nome as nomeDepartamento from usuario a 
                                          inner join departamento b on(a.departamentoid=b.departamentoid)
-                                         where usuarioID={0}}", usuarioID);
+                                         where usuarioID={0}", usuarioID);
 
             var cmd = new SqlCommand(sql, this.conexao.ObterConexao());
             SqlDataReader sqlDataReader = cmd.ExecuteReader();
@@ -66,21 +66,23 @@ namespace unipaulistana.model
 
         public void Adicionar(Usuario usuario)
         {
-            string query = "insert into dbo.usuario (Nome, Email, Senha, Foto) VALUES (@Nome, @Email, @Senha, @Foto) ";
+            string query = "insert into dbo.usuario (Nome, Email, Senha, Foto, DepartamentoID) VALUES (@Nome, @Email, @Senha, @Foto, @DepartamentoID) ";
             var cmd = new SqlCommand(query, this.conexao.ObterConexao());
             cmd.Parameters.Add("@Nome", SqlDbType.VarChar, 255).Value = usuario.Nome;
             cmd.Parameters.Add("@Email", SqlDbType.VarChar, 255).Value = usuario.Email;
             cmd.Parameters.Add("@Senha", SqlDbType.VarChar, 10).Value = usuario.Senha;
             cmd.Parameters.Add("@Foto", SqlDbType.VarChar, 10).Value = "user.png";
+            cmd.Parameters.Add("@DepartamentoID", SqlDbType.Int).Value = usuario.DepartamentoID;
             cmd.ExecuteNonQuery();
         } 
 
         public void Atualizar(Usuario usuario)
         {
-            string query = string.Format("update dbo.usuario set Nome=@Nome, Email=@Email where UsuarioID={0}", usuario.UsuarioID);
+            string query = string.Format("update dbo.usuario set Nome=@Nome, Email=@Email, DepartamentoID=@DepartamentoID where UsuarioID={0}", usuario.UsuarioID);
             var cmd = new SqlCommand(query, this.conexao.ObterConexao());
             cmd.Parameters.Add("@Nome", SqlDbType.VarChar, 50).Value = usuario.Nome;
             cmd.Parameters.Add("@Email", SqlDbType.VarChar, 255).Value = usuario.Email;
+            cmd.Parameters.Add("@DepartamentoID", SqlDbType.Int).Value = usuario.DepartamentoID;
             cmd.ExecuteNonQuery();
         } 
 

@@ -17,13 +17,15 @@ namespace unipaulistana.web.Controllers
     [Authorize]
     public class UsuarioController : Controller
     {
-        public UsuarioController(IUsuarioService usuarioService, IHostingEnvironment hostingEnvironment)
+        public UsuarioController(IUsuarioService usuarioService, IDepartamentoService departamentoService, IHostingEnvironment hostingEnvironment)
         {
             this.usuarioService = usuarioService;
             this.hostingEnvironment = hostingEnvironment;
+            this.departamentoService = departamentoService;
         }
 
         readonly IUsuarioService usuarioService;
+        readonly IDepartamentoService departamentoService;
         readonly IHostingEnvironment hostingEnvironment;
 
         public IActionResult Index()
@@ -38,6 +40,7 @@ namespace unipaulistana.web.Controllers
 
         public IActionResult Criar()
         {
+            ViewBag.ListarDepartamentos = this.departamentoService.ObterTodos();
             return View();
         }
 
@@ -56,6 +59,7 @@ namespace unipaulistana.web.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("error", string.Format("Ocorreu um erro ao tentar atualizar o usuário:", ex.Message));
+                ViewBag.ListarDepartamentos = this.departamentoService.ObterTodos();
                 return View(dados);
             }
         }
@@ -107,15 +111,13 @@ namespace unipaulistana.web.Controllers
                 ViewBag.Sucesso = TempData["mensagemEdicao"];
             }
 
+            ViewBag.ListarDepartamentos = this.departamentoService.ObterTodos();
             return View(this.usuarioService.ObterPorID(id));
         }
 
         [HttpPost]
         public IActionResult Alterar(Usuario dados)
         {
-            if (!ModelState.IsValid)
-                return View(dados);
-
             try
             {
                 this.usuarioService.Atualizar(dados);
@@ -125,6 +127,7 @@ namespace unipaulistana.web.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("error", string.Format("Ocorreu um erro ao tentar atualizar o usuário:", ex.Message));
+                ViewBag.ListarDepartamentos = this.departamentoService.ObterTodos();
                 return View(dados);
             }
         }
