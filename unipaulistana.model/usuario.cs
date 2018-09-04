@@ -13,6 +13,7 @@ namespace unipaulistana.model
             this.Nome = nome;
             this.Email = email;
             this.Senha = senha;
+            this.ConfirmarSenha = senha;
         }
 
         public Usuario(int usuarioID, string nome, string email, string senha, string foto)
@@ -22,6 +23,7 @@ namespace unipaulistana.model
             this.Email = email;
             this.Senha = senha;
             this.Foto = foto;
+            this.ConfirmarSenha = senha;
         }
 
         public int UsuarioID { get; set; }

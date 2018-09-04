@@ -69,11 +69,10 @@ namespace unipaulistana.model
 
         public void Atualizar(Usuario usuario)
         {
-            string query = string.Format("update dbo.usuario set Nome=@Nome, Email=@Email, Senha=@Senha where UsuarioID={0}", usuario.UsuarioID);
+            string query = string.Format("update dbo.usuario set Nome=@Nome, Email=@Email where UsuarioID={0}", usuario.UsuarioID);
             var cmd = new SqlCommand(query, this.conexao.ObterConexao());
             cmd.Parameters.Add("@Nome", SqlDbType.VarChar, 50).Value = usuario.Nome;
             cmd.Parameters.Add("@Email", SqlDbType.VarChar, 255).Value = usuario.Email;
-            cmd.Parameters.Add("@Senha", SqlDbType.VarChar, 10).Value = usuario.Senha;
             cmd.ExecuteNonQuery();
         } 
 
@@ -83,6 +82,14 @@ namespace unipaulistana.model
             var cmd = new SqlCommand();
             cmd.CommandText = excluiSQL ;
             cmd.Connection = this.conexao.ObterConexao();
+            cmd.ExecuteNonQuery();
+        } 
+
+        public void AtualizarSenha(int usuarioID, string novaSenha)
+        {
+            string query = string.Format("update dbo.usuario set Senha=@Senha where UsuarioID={0}", usuarioID);
+            var cmd = new SqlCommand(query, this.conexao.ObterConexao());
+            cmd.Parameters.Add("@Senha", SqlDbType.VarChar, 10).Value = novaSenha;
             cmd.ExecuteNonQuery();
         } 
 

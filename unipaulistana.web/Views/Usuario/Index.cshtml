@@ -39,6 +39,9 @@
                         <td>  
                             <a id="editarUsuario" asp-action="Alterar" asp-route-id= "@item.UsuarioID" class="btn btn-info">  
                                 <i class="glyphicon glyphicon-pencil"></i>  Alterar  
+                            </a>
+                            <a id="AlterarSenhaUsuario" asp-action="AlterarSenhaViaAdmin" asp-route-id= "@item.UsuarioID" class="btn btn-warning">  
+                                <i class="glyphicon glyphicon-pencil"></i>  Alterar senha 
                             </a>  
                             <a id="ExcluirUsuario" asp-action="Excluir" asp-route-id= "@item.UsuarioID" class="btn btn-danger">  
                                 <i class="glyphicon glyphicon-trash"></i>  Excluir  

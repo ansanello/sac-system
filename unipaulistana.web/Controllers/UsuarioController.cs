@@ -66,7 +66,7 @@ namespace unipaulistana.web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ImagemUsuario(List<IFormFile> files)
+        public IActionResult ImagemUsuario(List<IFormFile> files)
         {
             long size = files.Sum(f => f.Length);
             if (size <= 0)
@@ -87,7 +87,7 @@ namespace unipaulistana.web.Controllers
                     var fullPath = Path.Combine(uploads, novoArquivo);
                     formFile.CopyTo(new FileStream(fullPath, FileMode.Create));
 
-                    this.usuarioService.AtualizarFoto(User.GetUserID(),novoArquivo);
+                    this.usuarioService.AtualizarFoto(User.GetUserID(), novoArquivo);
                 }
 
                 TempData["mensagem"] = "Arquivo enviado com sucesso.";
@@ -147,6 +147,49 @@ namespace unipaulistana.web.Controllers
             {
                 ModelState.AddModelError("error", string.Format("Ocorreu um erro ao tentar atualizar o usuário:", ex.Message));
                 return View(dados);
+            }
+        }
+
+        public IActionResult NovaSenha()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult NovaSenha(NovaSenha novaSenha)
+        {
+            try
+            {
+                this.usuarioService.AtualizarSenha(User.GetUserID(), novaSenha.SenhaAnterior, novaSenha.Senha);
+                TempData["mensagem"] = "Senha atualizada com sucesso.";
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um erro ao tentar atualizar a senha:{0}", ex.Message);
+                return View();
+            }
+        }
+
+        public IActionResult AlterarSenhaViaAdmin(int id)
+        {
+            var usuario = new NovaSenhaAlteradaPorAdmin(id);
+            return View(usuario);
+        }
+
+        [HttpPost]
+        public IActionResult AlterarSenhaViaAdmin(NovaSenhaAlteradaPorAdmin novaSenha)
+        {
+            try
+            {
+                this.usuarioService.AtualizarSenha(novaSenha.UserID, novaSenha.Senha);
+                TempData["mensagem"] = "Senha atualizada com sucesso.";
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um erro ao tentar atualizar a senha:{0}", ex.Message);
+                return View();
             }
         }
     }

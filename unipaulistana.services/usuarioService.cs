@@ -40,5 +40,20 @@ namespace unipaulistana.model
         {
             this.repository.AtualizarFoto(usuarioID, nomeDaImagem);
         }
+
+        public void AtualizarSenha(int usuarioID, string novaSenha)
+        {
+            this.repository.AtualizarSenha(usuarioID, novaSenha);
+        }
+
+        public void AtualizarSenha(int usuarioID, string senhaAnterior, string novaSenha)
+        {
+            Usuario usuario = this.repository.ObterPorID(usuarioID);
+            
+            if(usuario.Senha != senhaAnterior)
+                throw new Exception("Senha anterior inválida.");
+
+            this.repository.AtualizarSenha(usuarioID, novaSenha);
+        }
     }
 }
