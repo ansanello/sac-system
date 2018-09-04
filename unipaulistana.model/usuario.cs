@@ -26,12 +26,25 @@ namespace unipaulistana.model
             this.ConfirmarSenha = senha;
         }
 
+        public Usuario(int usuarioID, string nome, string email, string senha, string foto, int departamentoID, string nomeDepartamento)
+        {
+            this.UsuarioID = usuarioID;
+            this.Nome = nome;
+            this.Email = email;
+            this.Senha = senha;
+            this.Foto = foto;
+            this.ConfirmarSenha = senha;
+            this.Departamento = new Departamento(departamentoID, nomeDepartamento);
+        }
+
         public int UsuarioID { get; set; }
 
         [Required(ErrorMessage="O campo nome é obrigatório")]
         public string Nome { get; set; }
 
         public string Foto { get; set; }
+
+        public Departamento Departamento { get; set; }
 
         [Required(ErrorMessage="O campo email é obrigatório")]
         [DataType(DataType.EmailAddress, ErrorMessage="Informe um email válido.")]

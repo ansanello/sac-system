@@ -17,17 +17,23 @@ namespace unipaulistana.model
 
         public IEnumerable<Usuario> ObterTodos()
         {
-            var cmd = new SqlCommand("select * from usuario", this.conexao.ObterConexao());
+            var cmd = new SqlCommand(@"select a.*, b.nome as nomeDepartamento from usuario a 
+                                         inner join departamento b on(a.departamentoid=b.departamentoid)", this.conexao.ObterConexao());
             SqlDataReader sqlDataReader = cmd.ExecuteReader();
 
             while (sqlDataReader.Read())
                 yield return new Usuario( Convert.ToInt32(sqlDataReader.GetValue(0)), sqlDataReader.GetValue(1).ToString(),
-                                                          sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString());
+                                                       sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(),
+                                                       sqlDataReader.GetValue(4).ToString(), Convert.ToInt32(sqlDataReader.GetValue(5).ToString()),
+                                                       sqlDataReader.GetValue(6).ToString());
         }
 
         public Usuario ObterPorID(int usuarioID)
         {
-            string sql = string.Format("select * from usuario where usuarioID={0}", usuarioID);
+            string sql = string.Format(@"select a.*, b.nome as nomeDepartamento from usuario a 
+                                         inner join departamento b on(a.departamentoid=b.departamentoid)
+                                         where usuarioID={0}}", usuarioID);
+
             var cmd = new SqlCommand(sql, this.conexao.ObterConexao());
             SqlDataReader sqlDataReader = cmd.ExecuteReader();
 
@@ -35,7 +41,9 @@ namespace unipaulistana.model
             while (sqlDataReader.Read())
             {
                 usuario = new Usuario( Convert.ToInt32(sqlDataReader.GetValue(0)), sqlDataReader.GetValue(1).ToString(),
-                                                       sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString());
+                                                       sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(),
+                                                       sqlDataReader.GetValue(4).ToString(), Convert.ToInt32(sqlDataReader.GetValue(5).ToString()),
+                                                       sqlDataReader.GetValue(6).ToString());
             }
             return usuario;
         }
