@@ -11,5 +11,6 @@ namespace unipaulistana.model
         void Atualizar(Usuario usuario);
         void Excluir(int usuarioID);
         Usuario Login(string email, string senha);
+        void AtualizarFoto(int usuarioID, string nomeDaImagem);
     } 
 }

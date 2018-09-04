@@ -2,6 +2,7 @@ namespace unipaulistana.web.extensions
 {
     using System.Security.Claims;
     using System.Security.Principal;
+    using System;
     public static class UserExtended
     {
         public static string GetFullName(this IPrincipal user)
@@ -21,7 +22,12 @@ namespace unipaulistana.web.extensions
             var claim = ((ClaimsIdentity)user.Identity).FindFirst(ClaimTypes.UserData);
             return claim == null ? null : claim.Value;
         }
-        
+
+        public static int GetUserID(this IPrincipal user)
+        {
+            var claim = ((ClaimsIdentity)user.Identity).FindFirst(ClaimTypes.Sid);
+            return claim == null ? 0 : Convert.ToInt32(claim.Value);
+        }
     }
 }
 

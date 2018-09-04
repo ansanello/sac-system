@@ -85,5 +85,13 @@ namespace unipaulistana.model
             cmd.Connection = this.conexao.ObterConexao();
             cmd.ExecuteNonQuery();
         } 
+
+        public void AtualizarFoto(int usuarioID, string nomeDaImagem)
+        {
+            string query = string.Format("update dbo.usuario set Foto=@Foto where UsuarioID={0}", usuarioID);
+            var cmd = new SqlCommand(query, this.conexao.ObterConexao());
+            cmd.Parameters.Add("@Foto", SqlDbType.VarChar, 50).Value = nomeDaImagem;
+            cmd.ExecuteNonQuery();
+        } 
     }
 }

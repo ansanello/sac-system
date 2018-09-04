@@ -39,6 +39,7 @@
             {
                 var claims = new List<Claim>
                     {
+                        new Claim(ClaimTypes.Sid, usuario.UsuarioID.ToString()),
                         new Claim(ClaimTypes.Name, usuario.Nome),
                         new Claim(ClaimTypes.Email, usuario.Email),
                         new Claim(ClaimTypes.UserData, usuario.Foto)

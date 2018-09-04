@@ -35,5 +35,10 @@ namespace unipaulistana.model
 
         public Usuario Login(string email, string senha)
             => this.repository.Login(email, senha);
+
+        public void AtualizarFoto(int usuarioID, string nomeDaImagem)
+        {
+            this.repository.AtualizarFoto(usuarioID, nomeDaImagem);
+        }
     }
 }
