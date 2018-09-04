@@ -40,6 +40,8 @@
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
+            services.AddScoped<IDepartamentoService, DepartamentoService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
