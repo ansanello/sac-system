@@ -27,13 +27,22 @@ BEGIN
     Nome varchar(255) NOT NULL,
     Email varchar(255) NOT NULL,
     Senha varchar(10) NOT NULL,
-    Foto varchar(50) NULL
+    Foto varchar(50) NULL,
+    DepartamentoID INT NOT NULL,
+    FOREIGN KEY(DepartamentoID) REFERENCES departamento(departamentoID)
 );
+END
+GO
+
+
+IF (NOT EXISTS (SELECT * FROM departamento WHERE nome = 'admin'))
+BEGIN
+    INSERT INTO departamento (nome) values ('admin')
 END
 GO
 
 IF (NOT EXISTS (SELECT * FROM usuario WHERE Email = 'admin@uni.com.br'))
 BEGIN
-    INSERT INTO usuario (nome, email, senha, foto) values ('admin', 'admin@uni.com.br', '123456', 'user.png')
+    INSERT INTO usuario (nome, email, senha, foto, DepartamentoID) values ('admin', 'admin@uni.com.br', '123456', 'user.png', (SELECT TOP 1 DepartamentoID FROM departamento WHERE nome = 'admin'))
 END
 GO
