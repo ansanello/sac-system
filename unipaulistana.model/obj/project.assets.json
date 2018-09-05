@@ -280,6 +280,9 @@
   },
   "project": {
     "version": "1.0.0",
+    "restoreSettings": {
+      "hideWarningsAndErrors": true
+    },
     "restore": {
       "projectUniqueName": "C:\\sistemas\\unipaulistana-sac-project\\unipaulistana.model\\unipaulistana.model.csproj",
       "projectName": "unipaulistana.model",

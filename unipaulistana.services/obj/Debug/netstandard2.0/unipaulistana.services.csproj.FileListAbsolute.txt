@@ -30,3 +30,4 @@ C:\sistemas\unipaulistana-sac-project\unipaulistana.services\bin\Debug\netstanda
 C:\sistemas\unipaulistana-sac-project\unipaulistana.services\bin\Debug\netstandard2.0\unipaulistana.services.pdb
 C:\sistemas\unipaulistana-sac-project\unipaulistana.services\bin\Debug\netstandard2.0\unipaulistana.model.dll
 C:\sistemas\unipaulistana-sac-project\unipaulistana.services\bin\Debug\netstandard2.0\unipaulistana.model.pdb
+C:\sistemas\unipaulistana-sac-project\unipaulistana.services\obj\Debug\netstandard2.0\unipaulistana.services.csprojResolveAssemblyReference.cache

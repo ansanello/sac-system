@@ -17,22 +17,45 @@ namespace unipaulistana.model
 
         public IEnumerable<Usuario> ObterTodos()
         {
-            var cmd = new SqlCommand(@"select a.*, b.nome as nomeDepartamento from usuario a 
-                                         inner join departamento b on(a.departamentoid=b.departamentoid)", this.conexao.ObterConexao());
+            var cmd = new SqlCommand(@"select 
+                                        a.usuarioID,
+                                        a.Nome,
+                                        a.Email,
+                                        a.Senha,
+                                        a.Foto,
+                                        a.DepartamentoID,
+                                        b.nome as nomeDepartamento,
+                                        a.GrupoDeSegurancaID,
+                                        c.nome as nomeGrupoDeSeguranca
+                                    from usuario a 
+                                    inner join departamento b on(a.departamentoid=b.departamentoid)
+                                    inner join grupoDeSeguranca c on(a.grupoDeSegurancaID=c.grupoDeSegurancaID)", this.conexao.ObterConexao());
             SqlDataReader sqlDataReader = cmd.ExecuteReader();
 
             while (sqlDataReader.Read())
                 yield return new Usuario( Convert.ToInt32(sqlDataReader.GetValue(0)), sqlDataReader.GetValue(1).ToString(),
                                                        sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(),
                                                        sqlDataReader.GetValue(4).ToString(), Convert.ToInt32(sqlDataReader.GetValue(5).ToString()),
-                                                       sqlDataReader.GetValue(6).ToString());
+                                                       sqlDataReader.GetValue(6).ToString(), Convert.ToInt32(sqlDataReader.GetValue(7).ToString()),
+                                                       sqlDataReader.GetValue(8).ToString());
         }
 
         public Usuario ObterPorID(int usuarioID)
         {
-            string sql = string.Format(@"select a.*, b.nome as nomeDepartamento from usuario a 
-                                         inner join departamento b on(a.departamentoid=b.departamentoid)
-                                         where usuarioID={0}", usuarioID);
+            string sql = string.Format(@"select 
+                                        a.usuarioID,
+                                        a.Nome,
+                                        a.Email,
+                                        a.Senha,
+                                        a.Foto,
+                                        a.DepartamentoID,
+                                        b.nome as nomeDepartamento,
+                                        a.GrupoDeSegurancaID,
+                                        c.nome as nomeGrupoDeSeguranca
+                                    from usuario a 
+                                    inner join departamento b on(a.departamentoid=b.departamentoid)
+                                    inner join grupoDeSeguranca c on(a.grupoDeSegurancaID=c.grupoDeSegurancaID)
+                                         where a.usuarioID={0}", usuarioID);
 
             var cmd = new SqlCommand(sql, this.conexao.ObterConexao());
             SqlDataReader sqlDataReader = cmd.ExecuteReader();
@@ -43,7 +66,8 @@ namespace unipaulistana.model
                 usuario = new Usuario( Convert.ToInt32(sqlDataReader.GetValue(0)), sqlDataReader.GetValue(1).ToString(),
                                                        sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(),
                                                        sqlDataReader.GetValue(4).ToString(), Convert.ToInt32(sqlDataReader.GetValue(5).ToString()),
-                                                       sqlDataReader.GetValue(6).ToString());
+                                                       sqlDataReader.GetValue(6).ToString(), Convert.ToInt32(sqlDataReader.GetValue(7).ToString()),
+                                                       sqlDataReader.GetValue(8).ToString());
             }
             return usuario;
         }
@@ -66,23 +90,32 @@ namespace unipaulistana.model
 
         public void Adicionar(Usuario usuario)
         {
-            string query = "insert into dbo.usuario (Nome, Email, Senha, Foto, DepartamentoID) VALUES (@Nome, @Email, @Senha, @Foto, @DepartamentoID) ";
+            string query = @"insert into dbo.usuario (Nome, Email, Senha, Foto, DepartamentoID, GrupoDeSegurancaID) 
+                                        values (@Nome, @Email, @Senha, @Foto, @DepartamentoID, @GrupoDeSegurancaID) ";
             var cmd = new SqlCommand(query, this.conexao.ObterConexao());
             cmd.Parameters.Add("@Nome", SqlDbType.VarChar, 255).Value = usuario.Nome;
             cmd.Parameters.Add("@Email", SqlDbType.VarChar, 255).Value = usuario.Email;
             cmd.Parameters.Add("@Senha", SqlDbType.VarChar, 10).Value = usuario.Senha;
             cmd.Parameters.Add("@Foto", SqlDbType.VarChar, 10).Value = "user.png";
             cmd.Parameters.Add("@DepartamentoID", SqlDbType.Int).Value = usuario.DepartamentoID;
+            cmd.Parameters.Add("@GrupoDeSegurancaID", SqlDbType.Int).Value = usuario.GrupoDeSegurancaID;
             cmd.ExecuteNonQuery();
         } 
 
         public void Atualizar(Usuario usuario)
         {
-            string query = string.Format("update dbo.usuario set Nome=@Nome, Email=@Email, DepartamentoID=@DepartamentoID where UsuarioID={0}", usuario.UsuarioID);
+            string query = string.Format(@"update dbo.usuario 
+                                                set Nome=@Nome, 
+                                                    Email=@Email, 
+                                                    DepartamentoID=@DepartamentoID, 
+                                                    GrupoDeSegurancaID=@GrupoDeSegurancaID 
+                                                where UsuarioID={0}", usuario.UsuarioID);
+                                                
             var cmd = new SqlCommand(query, this.conexao.ObterConexao());
             cmd.Parameters.Add("@Nome", SqlDbType.VarChar, 50).Value = usuario.Nome;
             cmd.Parameters.Add("@Email", SqlDbType.VarChar, 255).Value = usuario.Email;
             cmd.Parameters.Add("@DepartamentoID", SqlDbType.Int).Value = usuario.DepartamentoID;
+            cmd.Parameters.Add("@GrupoDeSegurancaID", SqlDbType.Int).Value = usuario.GrupoDeSegurancaID;
             cmd.ExecuteNonQuery();
         } 
 

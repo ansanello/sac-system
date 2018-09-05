@@ -48,3 +48,4 @@ C:\sistemas\unipaulistana-sac-project\unipaulistana.web\bin\Debug\netcoreapp2.0\
 C:\sistemas\unipaulistana-sac-project\unipaulistana.web\bin\Debug\netcoreapp2.0\unipaulistana.model.pdb
 C:\sistemas\unipaulistana-sac-project\unipaulistana.web\bin\Debug\netcoreapp2.0\unipaulistana.data.pdb
 C:\sistemas\unipaulistana-sac-project\unipaulistana.web\bin\Debug\netcoreapp2.0\unipaulistana.services.pdb
+C:\sistemas\unipaulistana-sac-project\unipaulistana.web\obj\Debug\netcoreapp2.0\unipaulistana.web.csprojResolveAssemblyReference.cache

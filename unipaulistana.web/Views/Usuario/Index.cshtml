@@ -27,6 +27,7 @@
                     <th>Nome</th> 
                     <th>Email</th>   
                     <th>Departamento</th>                      
+                    <th>Grupo de segurança</th>                      
                     <th></th>  
                 </tr>  
             </thead>  
@@ -38,6 +39,7 @@
                         <td>@Html.DisplayFor(modelItem => item.Nome)</td>  
                         <td>@Html.DisplayFor(modelItem => item.Email)</td>  
                         <td>@Html.DisplayFor(modelItem => item.Departamento.Nome)</td>  
+                        <td>@Html.DisplayFor(modelItem => item.GrupoDeSeguranca.Nome)</td>  
                         <td>  
                             <a id="editarUsuario" asp-action="Alterar" asp-route-id= "@item.UsuarioID" class="btn btn-info">  
                                 <i class="glyphicon glyphicon-pencil"></i>  Alterar  

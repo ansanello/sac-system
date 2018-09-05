@@ -2,9 +2,7 @@
 
 <br/>
 
-@if(TempData["mensagem"] != null){
-    <p style="color:red;">@TempData["mensagem"]</p>
-}
+@Html.Partial("_ErrorSummary")
 
 <div class="content">
 	<div class="module">

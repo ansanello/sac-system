@@ -24,3 +24,4 @@ C:\sistemas\unipaulistana-sac-project\unipaulistana.model\obj\Debug\netstandard2
 C:\sistemas\unipaulistana-sac-project\unipaulistana.model\obj\Debug\netstandard2.0\unipaulistana.model.AssemblyInfo.cs
 C:\sistemas\unipaulistana-sac-project\unipaulistana.model\obj\Debug\netstandard2.0\unipaulistana.model.dll
 C:\sistemas\unipaulistana-sac-project\unipaulistana.model\obj\Debug\netstandard2.0\unipaulistana.model.pdb
+C:\sistemas\unipaulistana-sac-project\unipaulistana.model\obj\Debug\netstandard2.0\unipaulistana.model.csprojResolveAssemblyReference.cache

@@ -17,9 +17,9 @@ namespace unipaulistana.web.Controllers
     [Authorize]
     public class UsuarioController : Controller
     {
-        public UsuarioController(IUsuarioService usuarioService, 
-                                 IDepartamentoService departamentoService, 
-                                 IGrupoDeSegurancaService grupoDeSegurancaService, 
+        public UsuarioController(IUsuarioService usuarioService,
+                                 IDepartamentoService departamentoService,
+                                 IGrupoDeSegurancaService grupoDeSegurancaService,
                                  IHostingEnvironment hostingEnvironment)
         {
             this.usuarioService = usuarioService;
@@ -52,9 +52,6 @@ namespace unipaulistana.web.Controllers
         [HttpPost]
         public IActionResult Criar(Usuario dados)
         {
-            if (!ModelState.IsValid)
-                return View(dados);
-
             try
             {
                 this.usuarioService.Adicionar(dados);
@@ -63,7 +60,7 @@ namespace unipaulistana.web.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("error", string.Format("Ocorreu um erro ao tentar atualizar o usuário:", ex.Message));
+                ModelState.AddModelError("", string.Format("Ocorreu um erro ao tentar atualizar o usuário:{0}", ex.Message));
                 AtualizarListas();
                 return View(dados);
             }
@@ -131,7 +128,7 @@ namespace unipaulistana.web.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("error", string.Format("Ocorreu um erro ao tentar atualizar o usuário:", ex.Message));
+                ModelState.AddModelError("", string.Format("Ocorreu um erro ao tentar atualizar o usuário:{0}", ex.Message));
                 AtualizarListas();
                 return View(dados);
             }
@@ -159,7 +156,7 @@ namespace unipaulistana.web.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("error", string.Format("Ocorreu um erro ao tentar atualizar o usuário:", ex.Message));
+                ModelState.AddModelError("", string.Format("Ocorreu um erro ao tentar atualizar o usuário:{0}", ex.Message));
                 return View(dados);
             }
         }
@@ -175,12 +172,12 @@ namespace unipaulistana.web.Controllers
             try
             {
                 this.usuarioService.AtualizarSenha(User.GetUserID(), novaSenha.SenhaAnterior, novaSenha.Senha);
-                TempData["mensagem"] = "Senha atualizada com sucesso.";
+                ViewBag.Sucesso = "Senha atualizada com sucesso.";
                 return View();
             }
             catch (Exception ex)
             {
-                TempData["mensagem"] = string.Format("Ocorreu um erro ao tentar atualizar a senha:{0}", ex.Message);
+                ModelState.AddModelError("", string.Format("Ocorreu um erro ao tentar atualizar a senha:{0}", ex.Message));
                 return View();
             }
         }
@@ -197,12 +194,12 @@ namespace unipaulistana.web.Controllers
             try
             {
                 this.usuarioService.AtualizarSenha(novaSenha.UserID, novaSenha.Senha);
-                TempData["mensagem"] = "Senha atualizada com sucesso.";
+                ViewBag.Sucesso = "Senha atualizada com sucesso.";
                 return View();
             }
             catch (Exception ex)
             {
-                TempData["mensagem"] = string.Format("Ocorreu um erro ao tentar atualizar a senha:{0}", ex.Message);
+                ModelState.AddModelError("", string.Format("Ocorreu um erro ao tentar atualizar a senha:{0}", ex.Message));
                 return View();
             }
         }

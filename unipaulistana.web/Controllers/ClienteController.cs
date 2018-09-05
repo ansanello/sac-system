@@ -48,7 +48,7 @@ namespace unipaulistana.web.Controllers
             }
             catch(Exception ex)
             {
-                ModelState.AddModelError("error", string.Format("Ocorreu um erro ao tentar atualizar o usuário:", ex.Message));
+                ModelState.AddModelError("", string.Format("Ocorreu um erro ao tentar atualizar o usuário:{0}", ex.Message));
                 return View(dados);
             }
         }
@@ -77,7 +77,7 @@ namespace unipaulistana.web.Controllers
             }
             catch(Exception ex)
             {
-                ModelState.AddModelError("error", string.Format("Ocorreu um erro ao tentar atualizar o usuário:", ex.Message));
+                ModelState.AddModelError("", string.Format("Ocorreu um erro ao tentar atualizar o usuário:{0}", ex.Message));
                 return View(dados);
             }
         }
@@ -98,7 +98,7 @@ namespace unipaulistana.web.Controllers
             }
             catch(Exception ex)
             {
-                ModelState.AddModelError("error", string.Format("Ocorreu um erro ao tentar atualizar o usuário:", ex.Message));
+                ModelState.AddModelError("error", string.Format("Ocorreu um erro ao tentar atualizar o usuário:{0}", ex.Message));
                 return View(dados);
             }
         }

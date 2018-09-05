@@ -26,7 +26,8 @@ namespace unipaulistana.model
             this.ConfirmarSenha = senha;
         }
 
-        public Usuario(int usuarioID, string nome, string email, string senha, string foto, int departamentoID, string nomeDepartamento)
+        public Usuario(int usuarioID, string nome, string email, string senha, string foto, int departamentoID, string nomeDepartamento,
+                       int grupoDeSegurancaID, string nomeGrupoSeguranca)
         {
             this.UsuarioID = usuarioID;
             this.Nome = nome;
@@ -36,6 +37,8 @@ namespace unipaulistana.model
             this.ConfirmarSenha = senha;
             this.DepartamentoID = departamentoID;
             this.Departamento = new Departamento(departamentoID, nomeDepartamento);
+            this.GrupoDeSegurancaID = grupoDeSegurancaID;
+            this.GrupoDeSeguranca = new GrupoDeSeguranca(grupoDeSegurancaID, nomeGrupoSeguranca);
         }
 
         public int UsuarioID { get; set; }
@@ -47,6 +50,10 @@ namespace unipaulistana.model
 
         public int DepartamentoID { get; set; }
         public Departamento Departamento { get; set; }
+
+        public int GrupoDeSegurancaID { get; set; }
+        
+        public GrupoDeSeguranca GrupoDeSeguranca { get; set; }
 
         [Required(ErrorMessage="O campo email é obrigatório")]
         [DataType(DataType.EmailAddress, ErrorMessage="Informe um email válido.")]
