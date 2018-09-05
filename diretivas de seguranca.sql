@@ -113,3 +113,9 @@ BEGIN
     INSERT INTO diretivaSeguranca (nome) values ('PermiteExcluirGrupoDeSeguranca')
 END
 GO
+
+IF (NOT EXISTS (SELECT * FROM diretivaSeguranca WHERE nome = 'PermiteAssociarDiretivaGrupoDeSeguranca'))
+BEGIN
+    INSERT INTO diretivaSeguranca (nome) values ('PermiteAssociarDiretivaGrupoDeSeguranca')
+END
+GO

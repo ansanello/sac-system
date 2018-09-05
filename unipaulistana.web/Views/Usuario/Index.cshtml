@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<unipaulistana.model.Usuario>  
+@using unipaulistana.web.extensions
 
 <br/>
 
@@ -8,11 +9,13 @@
 <div class="panel panel-primary">  
     <h3>Lista de usuários</h3>
     <div class="panel-body">  
-        <div class="btn-group">  
-            <a id="createEditCustomerModal" asp-action="Criar" class="btn btn-primary">  
-                <i class="glyphicon glyphicon-plus"></i>  Adicionar
-            </a>  
-        </div>  
+        @if(User.HasPermission("PermiteCriarUsuario")){
+            <div class="btn-group">  
+                <a id="createEditCustomerModal" asp-action="Criar" class="btn btn-primary">  
+                    <i class="glyphicon glyphicon-plus"></i>  Adicionar
+                </a>  
+            </div>  
+        }
         <br/>
         <br/>
         
@@ -41,15 +44,23 @@
                         <td>@Html.DisplayFor(modelItem => item.Departamento.Nome)</td>  
                         <td>@Html.DisplayFor(modelItem => item.GrupoDeSeguranca.Nome)</td>  
                         <td>  
-                            <a id="editarUsuario" asp-action="Alterar" asp-route-id= "@item.UsuarioID" class="btn btn-info">  
-                                <i class="glyphicon glyphicon-pencil"></i>  Alterar  
-                            </a>
-                            <a id="AlterarSenhaUsuario" asp-action="AlterarSenhaViaAdmin" asp-route-id= "@item.UsuarioID" class="btn btn-warning">  
-                                <i class="glyphicon glyphicon-pencil"></i>  Alterar senha 
-                            </a>  
-                            <a id="ExcluirUsuario" asp-action="Excluir" asp-route-id= "@item.UsuarioID" class="btn btn-danger">  
-                                <i class="glyphicon glyphicon-trash"></i>  Excluir  
-                            </a>  
+                            @if(User.HasPermission("PermiteAlterarUsuario")){
+                                <a id="editarUsuario" asp-action="Alterar" asp-route-id= "@item.UsuarioID" class="btn btn-info">  
+                                    <i class="glyphicon glyphicon-pencil"></i>  Alterar  
+                                </a>
+                            }
+
+                            @if(User.HasPermission("PermiteAlterarSenhaViaAdminUsuario")){
+                                <a id="AlterarSenhaUsuario" asp-action="AlterarSenhaViaAdmin" asp-route-id= "@item.UsuarioID" class="btn btn-warning">  
+                                    <i class="glyphicon glyphicon-pencil"></i>  Alterar senha 
+                                </a>  
+                            }
+
+                            @if(User.HasPermission("PermiteExcluirUsuario")){
+                                <a id="ExcluirUsuario" asp-action="Excluir" asp-route-id= "@item.UsuarioID" class="btn btn-danger">  
+                                    <i class="glyphicon glyphicon-trash"></i>  Excluir  
+                                </a>  
+                            }
                         </td>  
                     </tr>  
                 }  

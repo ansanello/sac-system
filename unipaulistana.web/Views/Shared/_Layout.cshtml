@@ -33,10 +33,26 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="@Url.Action("Index", "Usuario")">Usuários</a></li>
-								<li><a href="@Url.Action("Index", "Cliente")">Clientes</a></li>
-								<li><a href="@Url.Action("Index", "Departamento")">Departamento</a></li>
-								<li><a href="@Url.Action("Index", "GrupoDeSeguranca")">Grupo de segurança</a></li>
+								
+								@if(User.HasPermission("PermiteListarUsuario"))
+								{
+									<li><a href="@Url.Action("Index", "Usuario")">Usuários</a></li>
+								}
+								
+								@if(User.HasPermission("PermiteListarCliente"))
+								{
+									<li><a href="@Url.Action("Index", "Cliente")">Clientes</a></li>
+								}
+
+								@if(User.HasPermission("PermiteListarDepartamento"))
+								{
+									<li><a href="@Url.Action("Index", "Departamento")">Departamento</a></li>
+								}
+								
+								@if(User.HasPermission("PermiteListarGrupoDeSeguranca"))
+								{
+									<li><a href="@Url.Action("Index", "GrupoDeSeguranca")">Grupo de segurança</a></li>
+								}
 							</ul>
 						</li>
 				

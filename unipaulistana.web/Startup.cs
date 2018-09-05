@@ -74,6 +74,7 @@
                 options.AddPolicy("PermiteCriarGrupoDeSeguranca", policy=> policy.RequireClaim("PermiteCriarGrupoDeSeguranca"));  
                 options.AddPolicy("PermiteAlterarGrupoDeSeguranca", policy=> policy.RequireClaim("PermiteAlterarGrupoDeSeguranca"));  
                 options.AddPolicy("PermiteExcluirGrupoDeSeguranca", policy=> policy.RequireClaim("PermiteExcluirGrupoDeSeguranca")); 
+                options.AddPolicy("PermiteAssociarDiretivaGrupoDeSeguranca", policy=> policy.RequireClaim("PermiteAssociarDiretivaGrupoDeSeguranca")); 
             });
         }
 

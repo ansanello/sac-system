@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<unipaulistana.model.GrupoDeSeguranca>  
 
+@using unipaulistana.web.extensions
+
 <br/>
 
 @Html.Partial("_ErrorSummary")
@@ -8,11 +10,14 @@
 <div class="panel panel-primary">  
     <h3>Lista de grupos de segurança</h3>
     <div class="panel-body">  
-        <div class="btn-group">  
-            <a id="create" asp-action="Criar" class="btn btn-primary">  
-                <i class="glyphicon glyphicon-plus"></i>  Adicionar
-            </a>  
-        </div>  
+        
+        @if(User.HasPermission("PermiteCriarGrupoDeSeguranca")){
+            <div class="btn-group">  
+                <a id="create" asp-action="Criar" class="btn btn-primary">  
+                    <i class="glyphicon glyphicon-plus"></i>  Adicionar
+                </a>  
+            </div> 
+        } 
         <br/>
         <br/>
 
@@ -34,15 +39,24 @@
                         <td>@Html.DisplayFor(modelItem => item.GrupoDeSegurancaID)</td>  
                         <td>@Html.DisplayFor(modelItem => item.Nome)</td>  
                         <td>  
-                            <a id="edit" asp-action="Alterar" asp-route-id= "@item.GrupoDeSegurancaID" class="btn btn-info">  
-                                <i class="glyphicon glyphicon-pencil"></i>  Alterar  
-                            </a>  
-                            <a id="delete" asp-action="Excluir" asp-route-id= "@item.GrupoDeSegurancaID" class="btn btn-danger">  
-                                <i class="glyphicon glyphicon-trash"></i>  Excluir  
-                            </a> 
-                            <a id="delete" asp-action="Permissoes" asp-route-id= "@item.GrupoDeSegurancaID" class="btn btn-warning">  
-                                <i class="glyphicon glyphicon-trash"></i>  Permissões  
-                            </a>  
+                            
+                            @if(User.HasPermission("PermiteAlterarGrupoDeSeguranca")){
+                                <a id="edit" asp-action="Alterar" asp-route-id= "@item.GrupoDeSegurancaID" class="btn btn-info">  
+                                    <i class="glyphicon glyphicon-pencil"></i>  Alterar  
+                                </a>  
+                            }
+
+                            @if(User.HasPermission("PermiteExcluirGrupoDeSeguranca")){
+                                <a id="delete" asp-action="Excluir" asp-route-id= "@item.GrupoDeSegurancaID" class="btn btn-danger">  
+                                    <i class="glyphicon glyphicon-trash"></i>  Excluir  
+                                </a> 
+                            }
+
+                            @if(User.HasPermission("PermiteAssociarDiretivaGrupoDeSeguranca")){
+                                <a id="delete" asp-action="Permissoes" asp-route-id= "@item.GrupoDeSegurancaID" class="btn btn-warning">  
+                                    <i class="glyphicon glyphicon-trash"></i>  Permissões  
+                                </a>  
+                            }
                         </td>  
                     </tr>  
                 }  

@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<unipaulistana.model.Departamento>  
 
+@using unipaulistana.web.extensions
+
 <br/>
 
 @Html.Partial("_ErrorSummary")
@@ -8,11 +10,14 @@
 <div class="panel panel-primary">  
     <h3>Lista de departamento</h3>
     <div class="panel-body">  
-        <div class="btn-group">  
-            <a id="createEditCustomerModal" asp-action="Criar" class="btn btn-primary">  
-                <i class="glyphicon glyphicon-plus"></i>  Adicionar
-            </a>  
-        </div>  
+        
+        @if(User.HasPermission("PermiteCriarDepartamento")){
+            <div class="btn-group">  
+                <a id="createEditCustomerModal" asp-action="Criar" class="btn btn-primary">  
+                    <i class="glyphicon glyphicon-plus"></i>  Adicionar
+                </a>  
+            </div>  
+        }
         <br/>
         <br/>
         
@@ -35,12 +40,18 @@
                         <td>@Html.DisplayFor(modelItem => item.DepartamentoID)</td>  
                         <td>@Html.DisplayFor(modelItem => item.Nome)</td>  
                         <td>  
-                            <a id="editCustomerModal" asp-action="Alterar" asp-route-id= "@item.DepartamentoID" class="btn btn-info">  
-                                <i class="glyphicon glyphicon-pencil"></i>  Alterar  
-                            </a>  
-                            <a id="deleteCustomerModal" asp-action="Excluir" asp-route-id= "@item.DepartamentoID" class="btn btn-danger">  
-                                <i class="glyphicon glyphicon-trash"></i>  Excluir  
-                            </a>  
+                            
+                            @if(User.HasPermission("PermiteAlterarDepartamento")){
+                                <a id="editCustomerModal" asp-action="Alterar" asp-route-id= "@item.DepartamentoID" class="btn btn-info">  
+                                    <i class="glyphicon glyphicon-pencil"></i>  Alterar  
+                                </a>  
+                            }
+
+                            @if(User.HasPermission("PermiteExcluirDepartamento")){
+                                <a id="deleteCustomerModal" asp-action="Excluir" asp-route-id= "@item.DepartamentoID" class="btn btn-danger">  
+                                    <i class="glyphicon glyphicon-trash"></i>  Excluir  
+                                </a>  
+                            }
                         </td>  
                     </tr>  
                 }  
