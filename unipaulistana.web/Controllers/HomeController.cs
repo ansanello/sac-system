@@ -61,13 +61,18 @@
                 var principal = new ClaimsPrincipal(userIdentity);
 
                 HttpContext.SignInAsync(principal);
-                return RedirectToAction("Index", "Usuario");
+                return RedirectToAction("Dashboard", "Home");
             }
             else
             {
                 TempData["UserLoginFailed"] = "Falha ao tentar autenticar o usuário.";
                 return View();
             }
+        }
+
+        public IActionResult Dashboard()
+        {
+            return View();
         }
 
         public IActionResult AcessoNegado()
