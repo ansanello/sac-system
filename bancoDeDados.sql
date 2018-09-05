@@ -20,6 +20,16 @@ BEGIN
 END
 GO
 
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'grupoDeSeguranca'))
+BEGIN
+    CREATE TABLE grupoDeSeguranca (
+    grupoDeSegurancaID int IDENTITY(1,1) PRIMARY KEY,
+    Nome varchar(255) NOT NULL
+);
+END
+GO
+
+
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'usuario'))
 BEGIN
     CREATE TABLE usuario (
@@ -29,11 +39,19 @@ BEGIN
     Senha varchar(10) NOT NULL,
     Foto varchar(50) NULL,
     DepartamentoID INT NOT NULL,
-    FOREIGN KEY(DepartamentoID) REFERENCES departamento(departamentoID)
+	GrupoDeSegurancaID INT NOT NULL,
+    FOREIGN KEY(DepartamentoID) REFERENCES departamento(departamentoID),
+	FOREIGN KEY(GrupoDeSegurancaID) REFERENCES grupoDeSeguranca(GrupoDeSegurancaID)
 );
 END
 GO
 
+
+IF (NOT EXISTS (SELECT * FROM grupoDeSeguranca WHERE nome = 'admin'))
+BEGIN
+    INSERT INTO grupoDeSeguranca (nome) values ('admin')
+END
+GO
 
 IF (NOT EXISTS (SELECT * FROM departamento WHERE nome = 'admin'))
 BEGIN
@@ -43,6 +61,9 @@ GO
 
 IF (NOT EXISTS (SELECT * FROM usuario WHERE Email = 'admin@uni.com.br'))
 BEGIN
-    INSERT INTO usuario (nome, email, senha, foto, DepartamentoID) values ('admin', 'admin@uni.com.br', '123456', 'user.png', (SELECT TOP 1 DepartamentoID FROM departamento WHERE nome = 'admin'))
+    INSERT INTO usuario (nome, email, senha, foto, DepartamentoID, GrupoDeSegurancaID) 
+			values 
+	('admin', 'admin@uni.com.br', '123456', 'user.png', (SELECT TOP 1 DepartamentoID FROM departamento WHERE nome = 'admin'),
+			(SELECT TOP 1 grupoDeSegurancaID FROM grupoDeSeguranca WHERE nome = 'admin'))
 END
 GO

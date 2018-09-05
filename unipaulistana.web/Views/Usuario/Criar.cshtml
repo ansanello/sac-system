@@ -38,6 +38,13 @@
 					</div>
 				</div>
 				<div class="control-group">
+					<label class="control-label" asp-for="Email">Grupo de segurança</label>
+					<div class="controls">
+						<select asp-for="GrupoDeSegurancaID" class="form-control" asp-items="@(new SelectList(@ViewBag.ListarGruposDeSeguranca,"GrupoDeSegurancaID", "Nome"))"></select>
+						<span asp-validation-for="GrupoDeSegurancaID" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="control-group">
 					<label class="control-label" asp-for="Senha">Senha</label>
 					<div class="controls">
 						<input type="password" asp-for="Senha" type="text" id="basicinput" placeholder="senha" class="span8">

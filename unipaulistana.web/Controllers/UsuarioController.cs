@@ -17,15 +17,20 @@ namespace unipaulistana.web.Controllers
     [Authorize]
     public class UsuarioController : Controller
     {
-        public UsuarioController(IUsuarioService usuarioService, IDepartamentoService departamentoService, IHostingEnvironment hostingEnvironment)
+        public UsuarioController(IUsuarioService usuarioService, 
+                                 IDepartamentoService departamentoService, 
+                                 IGrupoDeSegurancaService grupoDeSegurancaService, 
+                                 IHostingEnvironment hostingEnvironment)
         {
             this.usuarioService = usuarioService;
             this.hostingEnvironment = hostingEnvironment;
             this.departamentoService = departamentoService;
+            this.grupoDeSegurancaService = grupoDeSegurancaService;
         }
 
         readonly IUsuarioService usuarioService;
         readonly IDepartamentoService departamentoService;
+        readonly IGrupoDeSegurancaService grupoDeSegurancaService;
         readonly IHostingEnvironment hostingEnvironment;
 
         public IActionResult Index()
@@ -40,7 +45,7 @@ namespace unipaulistana.web.Controllers
 
         public IActionResult Criar()
         {
-            ViewBag.ListarDepartamentos = this.departamentoService.ObterTodos();
+            AtualizarListas();
             return View();
         }
 
@@ -59,7 +64,7 @@ namespace unipaulistana.web.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("error", string.Format("Ocorreu um erro ao tentar atualizar o usuário:", ex.Message));
-                ViewBag.ListarDepartamentos = this.departamentoService.ObterTodos();
+                AtualizarListas();
                 return View(dados);
             }
         }
@@ -111,7 +116,7 @@ namespace unipaulistana.web.Controllers
                 ViewBag.Sucesso = TempData["mensagemEdicao"];
             }
 
-            ViewBag.ListarDepartamentos = this.departamentoService.ObterTodos();
+            AtualizarListas();
             return View(this.usuarioService.ObterPorID(id));
         }
 
@@ -127,9 +132,15 @@ namespace unipaulistana.web.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("error", string.Format("Ocorreu um erro ao tentar atualizar o usuário:", ex.Message));
-                ViewBag.ListarDepartamentos = this.departamentoService.ObterTodos();
+                AtualizarListas();
                 return View(dados);
             }
+        }
+
+        void AtualizarListas()
+        {
+            ViewBag.ListarDepartamentos = this.departamentoService.ObterTodos();
+            ViewBag.ListarGruposDeSeguranca = this.grupoDeSegurancaService.ObterTodos();
         }
 
         public IActionResult Excluir(int id)
