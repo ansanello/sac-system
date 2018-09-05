@@ -23,5 +23,21 @@ namespace unipaulistana.model
 
         public IEnumerable<DiretivaSeguranca> ObterDiretivasAssociadasGrupoDoUsuario(int usuarioID)
             => this.repository.ObterDiretivasAssociadasGrupoDoUsuario(usuarioID);
+
+        public IEnumerable<DiretivaSeguranca> ObterDiretivasNaoAssociadasGrupo(int grupoID)
+            => this.repository.ObterDiretivasNaoAssociadasGrupo(grupoID);
+
+        public IEnumerable<DiretivaSeguranca> ObterDiretivasAssociadasGrupo(int grupoID)
+            => this.repository.ObterDiretivasAssociadasGrupo(grupoID);
+
+        public void AdicionarPermissao(DiretivaSeguranca diretivaSeguranca)
+        {
+            this.repository.AdicionarPermissao(diretivaSeguranca);
+        }
+
+        public void RemoverPermissao(DiretivaSeguranca diretivaSeguranca)
+        {
+            this.repository.RemoverPermissao(diretivaSeguranca);
+        }
     }
 }

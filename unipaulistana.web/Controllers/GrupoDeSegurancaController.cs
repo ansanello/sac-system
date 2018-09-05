@@ -12,12 +12,14 @@ namespace unipaulistana.web.Controllers
     [Authorize]
     public class GrupoDeSegurancaController : Controller
     {
-        public GrupoDeSegurancaController(IGrupoDeSegurancaService grupoDeSegurancaService)
+        public GrupoDeSegurancaController(IGrupoDeSegurancaService grupoDeSegurancaService, IDiretivaSegurancaService diretivaSegurancaService)
         {
             this.grupoDeSegurancaService = grupoDeSegurancaService;
+            this.diretivaSegurancaService = diretivaSegurancaService;
         }
 
         readonly IGrupoDeSegurancaService grupoDeSegurancaService;
+        readonly IDiretivaSegurancaService diretivaSegurancaService;
 
         [Authorize(Policy="PermiteListarGrupoDeSeguranca")]
         public IActionResult Index()
@@ -92,11 +94,11 @@ namespace unipaulistana.web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Excluir(Departamento dados)
+        public ActionResult Excluir(GrupoDeSeguranca dados)
         {
             try
             {
-                this.grupoDeSegurancaService.Excluir(dados.DepartamentoID);
+                this.grupoDeSegurancaService.Excluir(dados.GrupoDeSegurancaID);
                 TempData["mensagemIndex"] = "Grupo excluído com sucesso."; 
                 return RedirectToAction("Index");
             }
@@ -106,5 +108,56 @@ namespace unipaulistana.web.Controllers
                 return View(dados);
             }
         }
+
+        public IActionResult Permissoes(int id)
+        {
+            if(TempData["mensagemIndex"] != null)
+            {
+                ViewBag.Sucesso = TempData["mensagemIndex"];
+            } 
+
+            InicializarViewBagsDeDiretivasDeSeguranca(id);
+            return View(new DiretivaSeguranca(id)); 
+        }
+
+        [HttpPost]
+        public IActionResult Permissoes(DiretivaSeguranca dados)
+        {   
+            try
+            {
+                this.diretivaSegurancaService.AdicionarPermissao(dados);
+                TempData["mensagemIndex"] = "Permissão adicionada com sucesso."; 
+                return RedirectToAction("Permissoes", dados.GrupoSegurancaID);
+            }
+            catch(Exception ex)
+            {
+                ModelState.AddModelError("", string.Format("Ocorreu um erro ao tentar adicionar uma permissão:{0}", ex.Message));
+                InicializarViewBagsDeDiretivasDeSeguranca(dados.GrupoSegurancaID);
+                return View(dados);
+            }
+        }
+
+        public IActionResult RemoverPermissao(int grupoID, int diretivaID)
+        {
+            try
+            {
+                this.diretivaSegurancaService.RemoverPermissao(new DiretivaSeguranca(grupoID, diretivaID));
+                TempData["mensagemIndex"] = "Permissão excluída com sucesso."; 
+                return RedirectToAction("Permissoes", grupoID);
+            }
+            catch(Exception ex)
+            {
+                ModelState.AddModelError("", string.Format("Ocorreu um erro ao tentar adicionar uma permissão:{0}", ex.Message));
+                return RedirectToAction("Permissoes", grupoID);
+            }
+        }
+
+        void InicializarViewBagsDeDiretivasDeSeguranca(int id)
+        {
+            ViewBag.listaDeDiretivasAssociadasAoGrupo = this.diretivaSegurancaService.ObterDiretivasAssociadasGrupo(id);
+            ViewBag.listaDeDiretivasNaoAssociadasAoGrupo = this.diretivaSegurancaService.ObterDiretivasNaoAssociadasGrupo(id);
+            ViewBag.NomeDoGrupo = this.grupoDeSegurancaService.ObterPorID(id).Nome;
+        }
     }
 }
+

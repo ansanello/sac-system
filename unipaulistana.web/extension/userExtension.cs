@@ -23,6 +23,12 @@ namespace unipaulistana.web.extensions
             return claim == null ? null : claim.Value;
         }
 
+        public static bool HasPermission(this IPrincipal user, string claimName)
+        {
+            var claim = ((ClaimsIdentity)user.Identity).FindFirst(claimName);
+            return claim == null ? false : true;
+        }
+
         public static int GetUserID(this IPrincipal user)
         {
             var claim = ((ClaimsIdentity)user.Identity).FindFirst(ClaimTypes.Sid);
