@@ -44,6 +44,36 @@
             services.AddScoped<IDepartamentoService, DepartamentoService>();
             services.AddScoped<IGrupoDeSegurancaRepository, GrupoDeSegurancaRepository>();
             services.AddScoped<IGrupoDeSegurancaService, GrupoDeSegurancaService>();
+            services.AddScoped<IDiretivaSegurancaRepository, DiretivaSegurancaRepository>();
+            services.AddScoped<IDiretivaSegurancaService, DiretivaSegurancaService>();
+
+            services.AddAuthorization(options => {
+               
+               //diretivas de usuário
+               options.AddPolicy("PermiteListarUsuario", policy=> policy.RequireClaim("PermiteListarUsuario"));  
+               options.AddPolicy("PermiteCriarUsuario", policy=> policy.RequireClaim("PermiteCriarUsuario"));  
+               options.AddPolicy("PermiteAlterarUsuario", policy=> policy.RequireClaim("PermiteAlterarUsuario"));  
+               options.AddPolicy("PermiteExcluirUsuario", policy=> policy.RequireClaim("PermiteExcluirUsuario"));  
+               options.AddPolicy("PermiteAlterarSenhaViaAdminUsuario", policy=> policy.RequireClaim("PermiteAlterarSenhaViaAdminUsuario"));  
+
+                //direitvas de cliente
+                options.AddPolicy("PermiteListarCliente", policy=> policy.RequireClaim("PermiteListarCliente"));  
+                options.AddPolicy("PermiteCriarCliente", policy=> policy.RequireClaim("PermiteCriarCliente"));  
+                options.AddPolicy("PermiteAlterarCliente", policy=> policy.RequireClaim("PermiteAlterarCliente"));  
+                options.AddPolicy("PermiteExcluirCliente", policy=> policy.RequireClaim("PermiteExcluirCliente"));  
+
+                //direitvas de departamento
+                options.AddPolicy("PermiteListarDepartamento", policy=> policy.RequireClaim("PermiteListarDepartamento"));  
+                options.AddPolicy("PermiteCriarDepartamento", policy=> policy.RequireClaim("PermiteCriarDepartamento"));  
+                options.AddPolicy("PermiteAlterarDepartamento", policy=> policy.RequireClaim("PermiteAlterarDepartamento"));  
+                options.AddPolicy("PermiteExcluirDepartamento", policy=> policy.RequireClaim("PermiteExcluirDepartamento"));  
+               
+                //direitvas de grupo de segurança
+                options.AddPolicy("PermiteListarGrupoDeSeguranca", policy=> policy.RequireClaim("PermiteListarGrupoDeSeguranca"));  
+                options.AddPolicy("PermiteCriarGrupoDeSeguranca", policy=> policy.RequireClaim("PermiteCriarGrupoDeSeguranca"));  
+                options.AddPolicy("PermiteAlterarGrupoDeSeguranca", policy=> policy.RequireClaim("PermiteAlterarGrupoDeSeguranca"));  
+                options.AddPolicy("PermiteExcluirGrupoDeSeguranca", policy=> policy.RequireClaim("PermiteExcluirGrupoDeSeguranca")); 
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

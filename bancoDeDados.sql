@@ -29,6 +29,28 @@ BEGIN
 END
 GO
 
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'diretivaSeguranca'))
+BEGIN
+    CREATE TABLE diretivaSeguranca (
+    diretivaSegurancaID int IDENTITY(1,1) PRIMARY KEY,
+    Nome varchar(255) NOT NULL
+);
+END
+GO
+
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'grupoDiretivaSeguranca'))
+BEGIN
+    CREATE TABLE grupoDiretivaSeguranca (
+    grupoDiretivaSegurancaID int IDENTITY(1,1) PRIMARY KEY,
+    DiretivaSegurancaID INT NOT NULL,
+	GrupoDeSegurancaID INT NOT NULL,
+    FOREIGN KEY(DiretivaSegurancaID) REFERENCES diretivaSeguranca(diretivaSegurancaID),
+	FOREIGN KEY(GrupoDeSegurancaID) REFERENCES grupoDeSeguranca(GrupoDeSegurancaID)
+);
+END
+GO
+
 
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'usuario'))
 BEGIN

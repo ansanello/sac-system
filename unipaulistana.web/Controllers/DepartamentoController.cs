@@ -19,6 +19,7 @@ namespace unipaulistana.web.Controllers
 
         readonly IDepartamentoService departamentoService;
 
+        [Authorize(Policy="PermiteListarDepartamento")]
         public IActionResult Index()
         { 
             if(TempData["mensagemIndex"] != null)
@@ -29,6 +30,7 @@ namespace unipaulistana.web.Controllers
             return View(this.departamentoService.ObterTodos());
         }
         
+        [Authorize(Policy="PermiteCriarDepartamento")]
         public IActionResult Criar()
         {
              return View();
@@ -53,6 +55,7 @@ namespace unipaulistana.web.Controllers
             }
         }
 
+        [Authorize(Policy="PermiteAlterarDepartamento")]
         public IActionResult Alterar(int id)
         {
             if(TempData["mensagemEdicao"] != null)
@@ -82,6 +85,7 @@ namespace unipaulistana.web.Controllers
             }
         }
 
+        [Authorize(Policy="PermiteExcluirDepartamento")]
         public IActionResult Excluir(int id)
         {
             return View(this.departamentoService.ObterPorID(id));

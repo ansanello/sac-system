@@ -72,5 +72,8 @@ namespace unipaulistana.model
 
         public bool ContemUsuario()
             => this != null && this.UsuarioID != 0;
+
+        public bool UsuarioAdmin()
+            => this.Nome.ToLower() == "admin";
     }
 }

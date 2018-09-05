@@ -19,6 +19,7 @@ namespace unipaulistana.web.Controllers
 
         readonly IGrupoDeSegurancaService grupoDeSegurancaService;
 
+        [Authorize(Policy="PermiteListarGrupoDeSeguranca")]
         public IActionResult Index()
         { 
             if(TempData["mensagemIndex"] != null)
@@ -29,6 +30,7 @@ namespace unipaulistana.web.Controllers
             return View(this.grupoDeSegurancaService.ObterTodos());
         }
         
+        [Authorize(Policy="PermiteCriarGrupoDeSeguranca")]
         public IActionResult Criar()
         {
              return View();
@@ -53,6 +55,7 @@ namespace unipaulistana.web.Controllers
             }
         }
 
+        [Authorize(Policy="PermiteAlterarGrupoDeSeguranca")]
         public IActionResult Alterar(int id)
         {
             if(TempData["mensagemEdicao"] != null)
@@ -82,6 +85,7 @@ namespace unipaulistana.web.Controllers
             }
         }
 
+        [Authorize(Policy="PermiteExcluirGrupoDeSeguranca")]
         public IActionResult Excluir(int id)
         {
             return View(this.grupoDeSegurancaService.ObterPorID(id));

@@ -15,12 +15,14 @@
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        public HomeController(IUsuarioService usuarioService)
+        public HomeController(IUsuarioService usuarioService, IDiretivaSegurancaService diretivaSegurancaService)
         {
             this.usuarioService = usuarioService;
+            this.diretivaSegurancaService = diretivaSegurancaService;
         }
 
         readonly IUsuarioService usuarioService;
+        readonly IDiretivaSegurancaService diretivaSegurancaService;
 
         public IActionResult Index()
         {
@@ -37,6 +39,13 @@
 
             if (usuario.ContemUsuario())
             {
+                IEnumerable<DiretivaSeguranca> diretivas = new List<DiretivaSeguranca>();
+
+                if(usuario.UsuarioAdmin())
+                    diretivas = this.diretivaSegurancaService.ObterTodos();
+                else
+                    diretivas = this.diretivaSegurancaService.ObterDiretivasAssociadasGrupoDoUsuario(usuario.UsuarioID);
+
                 var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Sid, usuario.UsuarioID.ToString()),
@@ -44,6 +53,9 @@
                         new Claim(ClaimTypes.Email, usuario.Email),
                         new Claim(ClaimTypes.UserData, usuario.Foto)
                     };
+
+                foreach(var item in diretivas)
+                    claims.Add(new Claim(item.Nome, ""));     
 
                 var userIdentity = new ClaimsIdentity(claims, "login");
                 var principal = new ClaimsPrincipal(userIdentity);

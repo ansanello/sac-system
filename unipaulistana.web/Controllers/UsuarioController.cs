@@ -33,6 +33,7 @@ namespace unipaulistana.web.Controllers
         readonly IGrupoDeSegurancaService grupoDeSegurancaService;
         readonly IHostingEnvironment hostingEnvironment;
 
+        [Authorize(Policy="PermiteListarUsuario")]
         public IActionResult Index()
         {
             if (TempData["mensagemIndex"] != null)
@@ -43,6 +44,7 @@ namespace unipaulistana.web.Controllers
             return View(this.usuarioService.ObterTodos());
         }
 
+        [Authorize(Policy="PermiteCriarUsuario")]
         public IActionResult Criar()
         {
             AtualizarListas();
@@ -106,6 +108,7 @@ namespace unipaulistana.web.Controllers
             }
         }
 
+        [Authorize(Policy="PermiteAlterarUsuario")]
         public IActionResult Alterar(int id)
         {
             if (TempData["mensagemEdicao"] != null)
@@ -140,6 +143,7 @@ namespace unipaulistana.web.Controllers
             ViewBag.ListarGruposDeSeguranca = this.grupoDeSegurancaService.ObterTodos();
         }
 
+        [Authorize(Policy="PermiteExcluirUsuario")]
         public IActionResult Excluir(int id)
         {
             return View(this.usuarioService.ObterPorID(id));
@@ -182,6 +186,7 @@ namespace unipaulistana.web.Controllers
             }
         }
 
+        [Authorize(Policy="PermiteAlterarSenhaViaAdminUsuario")]
         public IActionResult AlterarSenhaViaAdmin(int id)
         {
             var usuario = new NovaSenhaAlteradaPorAdmin(id);

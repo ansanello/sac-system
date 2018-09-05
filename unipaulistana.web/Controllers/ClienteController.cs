@@ -19,6 +19,7 @@ namespace unipaulistana.web.Controllers
 
         readonly IClienteService clienteService;
 
+        [Authorize(Policy="PermiteListarCliente")]
         public IActionResult Index()
         { 
             if(TempData["mensagemIndex"] != null)
@@ -29,6 +30,7 @@ namespace unipaulistana.web.Controllers
             return View(this.clienteService.ObterTodos());
         }
         
+        [Authorize(Policy="PermiteCriarCliente")]
         public IActionResult Criar()
         {
              return View();
@@ -53,6 +55,7 @@ namespace unipaulistana.web.Controllers
             }
         }
 
+        [Authorize(Policy="PermiteAlterarCliente")]
         public IActionResult Alterar(int id)
         {
             if(TempData["mensagemEdicao"] != null)
@@ -82,6 +85,7 @@ namespace unipaulistana.web.Controllers
             }
         }
 
+        [Authorize(Policy="PermiteExcluirCliente")]
         public IActionResult Excluir(int id)
         {
             return View(this.clienteService.ObterPorID(id));
