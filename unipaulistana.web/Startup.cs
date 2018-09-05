@@ -33,6 +33,7 @@
                     .AddCookie(options =>  
                     {  
                         options.LoginPath = "/Home/Index";  
+                        options.AccessDeniedPath = "/Home/AcessoNegado";
                     });  
 
             services.AddScoped<ConexaoContext>();

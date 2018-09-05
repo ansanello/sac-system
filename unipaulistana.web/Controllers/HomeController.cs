@@ -70,6 +70,11 @@
             }
         }
 
+        public IActionResult AcessoNegado()
+        {
+            return View();
+        }
+
         [HttpGet]  
         public IActionResult Logout()  
         {  
