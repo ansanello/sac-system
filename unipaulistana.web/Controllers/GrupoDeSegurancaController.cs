@@ -127,7 +127,7 @@ namespace unipaulistana.web.Controllers
             {
                 this.diretivaSegurancaService.AdicionarPermissao(dados);
                 TempData["mensagemIndex"] = "Permissão adicionada com sucesso."; 
-                return RedirectToAction("Permissoes", dados.GrupoSegurancaID);
+                return RedirectToAction("Permissoes", new { id=dados.GrupoSegurancaID });
             }
             catch(Exception ex)
             {
@@ -143,12 +143,12 @@ namespace unipaulistana.web.Controllers
             {
                 this.diretivaSegurancaService.RemoverPermissao(new DiretivaSeguranca(grupoID, diretivaID));
                 TempData["mensagemIndex"] = "Permissão excluída com sucesso."; 
-                return RedirectToAction("Permissoes", grupoID);
+                return RedirectToAction("Permissoes", new { id=grupoID } );
             }
             catch(Exception ex)
             {
                 ModelState.AddModelError("", string.Format("Ocorreu um erro ao tentar adicionar uma permissão:{0}", ex.Message));
-                return RedirectToAction("Permissoes", grupoID);
+                return RedirectToAction("Permissoes", new { id=grupoID });
             }
         }
 
