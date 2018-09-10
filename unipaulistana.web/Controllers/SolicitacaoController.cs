@@ -83,17 +83,17 @@ namespace unipaulistana.web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Alterar(Usuario dados)
+        public IActionResult Alterar(Solicitacao dados)
         {
             try
             {
-                this.usuarioService.Atualizar(dados);
-                TempData["mensagemEdicao"] = "Usuário atualizado com sucesso.";
-                return RedirectToAction("Alterar", dados.UsuarioID);
+                this.solicitacaoService.Atualizar(dados);
+                TempData["mensagemEdicao"] = "Solicitação atualizada com sucesso.";
+                return RedirectToAction("Alterar", dados.SolicitacaoID);
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", string.Format("Ocorreu um erro ao tentar atualizar o usuário:{0}", ex.Message));
+                ModelState.AddModelError("", string.Format("Ocorreu um erro ao tentar atualizar a solicitação:{0}", ex.Message));
                 AtualizarListas();
                 return View(dados);
             }
