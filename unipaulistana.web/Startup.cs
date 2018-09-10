@@ -47,6 +47,8 @@
             services.AddScoped<IGrupoDeSegurancaService, GrupoDeSegurancaService>();
             services.AddScoped<IDiretivaSegurancaRepository, DiretivaSegurancaRepository>();
             services.AddScoped<IDiretivaSegurancaService, DiretivaSegurancaService>();
+            services.AddScoped<ISolicitacaoRepository, SolicitacaoRepository>();
+            services.AddScoped<ISolicitacaoService, SolicitacaoService>();
 
             services.AddAuthorization(options => {
                
