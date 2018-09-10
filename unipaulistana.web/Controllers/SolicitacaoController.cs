@@ -79,7 +79,7 @@ namespace unipaulistana.web.Controllers
             }
 
             AtualizarListas();
-            return View(this.usuarioService.ObterPorID(id));
+            return View(this.solicitacaoService.ObterPorID(id));
         }
 
         [HttpPost]
