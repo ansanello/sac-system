@@ -77,6 +77,12 @@
                 options.AddPolicy("PermiteAlterarGrupoDeSeguranca", policy=> policy.RequireClaim("PermiteAlterarGrupoDeSeguranca"));  
                 options.AddPolicy("PermiteExcluirGrupoDeSeguranca", policy=> policy.RequireClaim("PermiteExcluirGrupoDeSeguranca")); 
                 options.AddPolicy("PermiteAssociarDiretivaGrupoDeSeguranca", policy=> policy.RequireClaim("PermiteAssociarDiretivaGrupoDeSeguranca")); 
+
+                 //diretivas de solicitação
+                options.AddPolicy("PermiteListarSolicitacao", policy=> policy.RequireClaim("PermiteListarSolicitacao"));  
+                options.AddPolicy("PermiteCriarSolicitacao", policy=> policy.RequireClaim("PermiteCriarSolicitacao"));  
+                options.AddPolicy("PermiteAlterarSolicitacao", policy=> policy.RequireClaim("PermiteAlterarSolicitacao"));  
+                options.AddPolicy("PermiteConcluirSolicitacao", policy=> policy.RequireClaim("PermiteConcluirSolicitacao"));  
             });
         }
 

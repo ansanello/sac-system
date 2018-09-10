@@ -5,12 +5,12 @@ namespace unipaulistana.model
 
     public class SolicitacaoService : ISolicitacaoService
     {
-        public SolicitacaoService(ISolicitacaoService repository)
+        public SolicitacaoService(ISolicitacaoRepository repository)
         {
             this.repository = repository;
         }
 
-        readonly ISolicitacaoService repository;
+        readonly ISolicitacaoRepository repository;
 
         public IEnumerable<Solicitacao> ObterTodos()
             => this.repository.ObterTodos();
@@ -18,8 +18,11 @@ namespace unipaulistana.model
         public Solicitacao ObterPorID(int solicitacaoID)
             => this.repository.ObterPorID(solicitacaoID);
 
-        public int Adicionar(Solicitacao solicitacao)
+        public int Adicionar(Solicitacao solicitacao, int solicitanteID)
         {
+            solicitacao.SolicitanteID = solicitanteID;
+            solicitacao.UsuarioID = solicitanteID;
+            solicitacao.DataDeCriacao = DateTime.Now;
             return this.repository.Adicionar(solicitacao);
         } 
 

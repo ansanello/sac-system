@@ -5,9 +5,9 @@ namespace unipaulistana.model
 
     public class Solicitacao
     {
-        public Solicitacao(){}
+        public Solicitacao() { }
 
-        public Solicitacao(int solicitacaoID, 
+        public Solicitacao(int solicitacaoID,
                             string descricao,
                             int clienteID,
                             int departamentoID,
@@ -22,26 +22,41 @@ namespace unipaulistana.model
             this.UsuarioID = usuarioID;
         }
 
-        public Solicitacao(int solicitacaoID, 
+
+
+
+        public Solicitacao(int solicitacaoID,
                             string descricao,
                             DateTime dataDeCriacao,
                             object dataDeConclusao,
                             bool concluido,
                             int clienteID,
                             int departamentoID,
-                            int usuarioID)
+                            int usuarioID,
+                            int solicitanteID,
+                            StatusSolicitacao status,
+                            string nomeUsuario,
+                            string nomeCliente,
+                            string nomeDepartamento,
+                            string nomeSolicitante)
         {
             this.SolicitacaoID = solicitacaoID;
             this.Descricao = descricao;
             this.DataDeCriacao = dataDeCriacao;
-            
-            if (dataDeConclusao != null)
+
+            if (dataDeConclusao != null && dataDeConclusao != DBNull.Value)
                 this.DataDeConclusao = Convert.ToDateTime(dataDeConclusao);
 
             this.Concluido = concluido;
             this.ClienteID = clienteID;
             this.DepartamentoID = departamentoID;
             this.UsuarioID = usuarioID;
+            this.SolicitanteID = solicitanteID;
+            this.Status = status;
+            this.NomeUsuario = nomeUsuario;
+            this.NomeCliente = nomeCliente;
+            this.NomeDepartamento = nomeDepartamento;
+            this.NomeSolicitante = nomeSolicitante;
         }
 
         public void ConcluirSolicitacao()
@@ -55,9 +70,23 @@ namespace unipaulistana.model
         public Nullable<DateTime> DataDeConclusao { get; set; }
         public string Descricao { get; set; }
         public int ClienteID { get; set; }
+        public StatusSolicitacao Status { get; set; }
         public int DepartamentoID { get; set; }
         public int UsuarioID { get; set; }
+        public int SolicitanteID {get;set;}
         public bool Concluido { get; set; }
+        public string NomeUsuario { get; set; }
+        public string NomeCliente { get; set; }
+        public string NomeDepartamento { get; set; }
+        public string NomeSolicitante { get; set; }
+    }
+
+    public enum StatusSolicitacao
+    {
+        nao_iniciado = 1,
+        em_analise = 2,
+        em_andamento = 3,
+        concluido = 4
     }
 }
 

@@ -7,7 +7,7 @@ namespace unipaulistana.model
     {
         IEnumerable<Solicitacao> ObterTodos();
         Solicitacao ObterPorID(int solicitacaoID);
-        int Adicionar(Solicitacao solicitacao);
+        int Adicionar(Solicitacao solicitacao, int solicitanteID);
         void Atualizar(Solicitacao solicitacao);
         void Excluir(int solicitacaoID);
         void Concluir(int solicitacaoID);

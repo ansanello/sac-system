@@ -119,3 +119,30 @@ BEGIN
     INSERT INTO diretivaSeguranca (nome) values ('PermiteAssociarDiretivaGrupoDeSeguranca')
 END
 GO
+
+
+-- diretivas de solicitações
+
+IF (NOT EXISTS (SELECT * FROM diretivaSeguranca WHERE nome = 'PermiteListarSolicitacao'))
+BEGIN
+    INSERT INTO diretivaSeguranca (nome) values ('PermiteListarSolicitacao')
+END
+GO
+
+IF (NOT EXISTS (SELECT * FROM diretivaSeguranca WHERE nome = 'PermiteCriarSolicitacao'))
+BEGIN
+    INSERT INTO diretivaSeguranca (nome) values ('PermiteCriarSolicitacao')
+END
+GO
+
+IF (NOT EXISTS (SELECT * FROM diretivaSeguranca WHERE nome = 'PermiteAlterarSolicitacao'))
+BEGIN
+    INSERT INTO diretivaSeguranca (nome) values ('PermiteAlterarSolicitacao')
+END
+GO
+
+IF (NOT EXISTS (SELECT * FROM diretivaSeguranca WHERE nome = 'PermiteConcluirSolicitacao'))
+BEGIN
+    INSERT INTO diretivaSeguranca (nome) values ('PermiteConcluirSolicitacao')
+END
+GO

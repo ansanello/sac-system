@@ -17,8 +17,8 @@ namespace unipaulistana.model
 
         public int Adicionar(Solicitacao solicitacao)
         {
-            string query = @"insert into dbo.solicitacao (DataDeCriacao, Descricao, ClienteID, DepartamentoID, UsuarioID) 
-                                        values (@DataDeCriacao, @Descricao, @ClienteID, @DepartamentoID, @UsuarioID); SELECT SCOPE_IDENTITY();";
+            string query = @"insert into dbo.solicitacao (DataDeCriacao, Descricao, ClienteID, DepartamentoID, UsuarioID, Status, SolicitanteID) 
+                                        values (@DataDeCriacao, @Descricao, @ClienteID, @DepartamentoID, @UsuarioID, @Status, @SolicitanteID); SELECT SCOPE_IDENTITY();";
             
             var cmd = new SqlCommand(query, this.conexao.ObterConexao());
             cmd.Parameters.Add("@DataDeCriacao", SqlDbType.DateTime, 255).Value = solicitacao.DataDeCriacao;
@@ -26,6 +26,8 @@ namespace unipaulistana.model
             cmd.Parameters.Add("@ClienteID", SqlDbType.Int).Value = solicitacao.ClienteID;
             cmd.Parameters.Add("@DepartamentoID", SqlDbType.Int).Value = solicitacao.DepartamentoID;
             cmd.Parameters.Add("@UsuarioID", SqlDbType.Int).Value = solicitacao.UsuarioID;
+            cmd.Parameters.Add("@Status", SqlDbType.Int).Value = StatusSolicitacao.nao_iniciado;
+            cmd.Parameters.Add("@SolicitanteID", SqlDbType.Int).Value = solicitacao.SolicitanteID;
             
             return cmd.ExecuteNonQuery();
         }
@@ -37,6 +39,7 @@ namespace unipaulistana.model
                                                     ClienteID=@ClienteID, 
                                                     DepartamentoID=@DepartamentoID ,
                                                     UsuarioID=@UsuarioID, 
+                                                    Status=@Status
                                                 where SolicitacaoID={0}", solicitacao.SolicitacaoID);
                                                 
             var cmd = new SqlCommand(query, this.conexao.ObterConexao());
@@ -44,6 +47,7 @@ namespace unipaulistana.model
             cmd.Parameters.Add("@ClienteID", SqlDbType.Int).Value = solicitacao.ClienteID;
             cmd.Parameters.Add("@DepartamentoID", SqlDbType.Int).Value = solicitacao.DepartamentoID;
             cmd.Parameters.Add("@UsuarioID", SqlDbType.Int).Value = solicitacao.UsuarioID;
+            cmd.Parameters.Add("@Status", SqlDbType.Int).Value = (int)solicitacao.Status;
             cmd.ExecuteNonQuery();
         }
 
@@ -70,7 +74,25 @@ namespace unipaulistana.model
 
         public Solicitacao ObterPorID(int solicitacaoID)
         {
-            string sql = string.Format("select * from solicitacao where SolicitacaoID={0}", solicitacaoID);
+            string sql = string.Format(@"select a.SolicitacaoID,
+                                            a.DataDeCriacao,
+                                            a.DataDeConclusao,
+                                            a.Descricao,
+                                            a.ClienteID,
+                                            a.DepartamentoID,
+                                            a.UsuarioID,
+                                            a.SolicitanteID,
+                                            a.Concluido, 
+                                            a.Status,
+                                            b.Nome as NomeUsuario,
+                                            c.Nome as NomeCliente,
+                                            d.Nome as NomeDepartamento,
+                                            d.Nome as NomeSolicitante
+                                        from solicitacao a
+                                        inner join usuario b on (a.usuarioID = b.usuarioID)
+                                        inner join cliente c on (a.clienteID = c.ClienteID)
+                                        inner join departamento d on (a.departamentoID = d.departamentoID) 
+                                        inner join usuario e on (a.usuarioID = e.usuarioID) where a.SolicitacaoID={0}", solicitacaoID);
             var cmd = new SqlCommand(sql, this.conexao.ObterConexao());
             SqlDataReader sqlDataReader = cmd.ExecuteReader();
 
@@ -84,14 +106,39 @@ namespace unipaulistana.model
                                                 Convert.ToBoolean(sqlDataReader["Concluido"]),
                                                 Convert.ToInt32(sqlDataReader["ClienteID"]),
                                                 Convert.ToInt32(sqlDataReader["departamentoID"]),
-                                                Convert.ToInt32(sqlDataReader["UsuarioID"]));
+                                                Convert.ToInt32(sqlDataReader["UsuarioID"]),
+                                                Convert.ToInt32(sqlDataReader["SolicitanteID"]),
+                                                (StatusSolicitacao)Convert.ToInt32(sqlDataReader["Status"]),
+                                                sqlDataReader["NomeUsuario"].ToString(),
+                                                sqlDataReader["NomeCliente"].ToString(),
+                                                sqlDataReader["NomeDepartamento"].ToString(),
+                                                sqlDataReader["NomeSolicitante"].ToString());
             }
             return solicitacao;
         }
 
         public IEnumerable<Solicitacao> ObterTodos()
         {
-           var cmd = new SqlCommand("select * from solicitacao", this.conexao.ObterConexao());
+           var cmd = new SqlCommand(@"select a.SolicitacaoID,
+                                            a.DataDeCriacao,
+                                            a.DataDeConclusao,
+                                            a.Descricao,
+                                            a.ClienteID,
+                                            a.DepartamentoID,
+                                            a.UsuarioID,
+                                            a.SolicitanteID,
+                                            a.Concluido, 
+                                            a.Status,
+                                            b.Nome as NomeUsuario,
+                                            c.Nome as NomeCliente,
+                                            d.Nome as NomeDepartamento,
+                                            d.Nome as NomeSolicitante
+                                        from solicitacao a
+                                        inner join usuario b on (a.usuarioID = b.usuarioID)
+                                        inner join cliente c on (a.clienteID = c.ClienteID)
+                                        inner join departamento d on (a.departamentoID = d.departamentoID)
+                                        inner join usuario e on (a.usuarioID = e.usuarioID)", this.conexao.ObterConexao());
+
             SqlDataReader sqlDataReader = cmd.ExecuteReader();
 
             while (sqlDataReader.Read())
@@ -102,7 +149,13 @@ namespace unipaulistana.model
                                                 Convert.ToBoolean(sqlDataReader["Concluido"]),
                                                 Convert.ToInt32(sqlDataReader["ClienteID"]),
                                                 Convert.ToInt32(sqlDataReader["departamentoID"]),
-                                                Convert.ToInt32(sqlDataReader["UsuarioID"]));
+                                                Convert.ToInt32(sqlDataReader["UsuarioID"]),
+                                                Convert.ToInt32(sqlDataReader["SolicitanteID"]),
+                                                (StatusSolicitacao)Convert.ToInt32(sqlDataReader["Status"]),
+                                                sqlDataReader["NomeUsuario"].ToString(),
+                                                sqlDataReader["NomeCliente"].ToString(),
+                                                sqlDataReader["NomeDepartamento"].ToString(),
+                                                sqlDataReader["NomeSolicitante"].ToString());
 
         }
     }
