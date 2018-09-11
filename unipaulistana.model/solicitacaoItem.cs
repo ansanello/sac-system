@@ -19,9 +19,17 @@ namespace unipaulistana.model
         }
 
         public int SolicitacaoItemID { get; set; }
+
+        [Display(Name="Protocolo")]
         public int SolicitacaoID { get; set; }
         public DateTime Data { get; set; }
+
+        [Display(Name="Descrição")]
+        [Required(ErrorMessage="O campo descrição é obrigatório")]
+        [StringLength(8000, ErrorMessage = "A descrição deve conter entre 5 e 8000 caracteres", MinimumLength = 5)]
         public string Descricao { get; set; }
+
+        [Display(Name="Usuário")]
         public int UsuarioID { get; set; }
     }
 }

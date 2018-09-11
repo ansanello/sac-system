@@ -65,15 +65,35 @@ namespace unipaulistana.model
             this.Concluido = true;
         }
 
+        [Display(Name="Protocolo")]
         public int SolicitacaoID { get; set; }
+
+        [Display(Name="Data")]
         public DateTime DataDeCriacao { get; set; }
+
+        [Display(Name="Data de conclusão")]
         public Nullable<DateTime> DataDeConclusao { get; set; }
+
+        [Display(Name="Descrição")]
+        [StringLength(8000, ErrorMessage = "A descriçao deve conter entre 5 e 8000 caracteres", MinimumLength = 5)]
         public string Descricao { get; set; }
+
+        [Display(Name="Cliente")]
         public int ClienteID { get; set; }
+
+        [Display(Name="Status")]
         public StatusSolicitacao Status { get; set; }
+
+        [Display(Name="Departamento")]
         public int DepartamentoID { get; set; }
+
+        [Display(Name="Usuário")]
         public int UsuarioID { get; set; }
+
+        [Display(Name="Solicitante")]
         public int SolicitanteID {get;set;}
+
+        [Display(Name="Concluído")]
         public bool Concluido { get; set; }
         public string NomeUsuario { get; set; }
         public string NomeCliente { get; set; }
