@@ -85,6 +85,8 @@
 	</div>				
 </div><!--/.content-->
 
+@await Component.InvokeAsync("SolicitacaoItens", new { solicitacaoID = Model.SolicitacaoID })
+
 <script>
         const nao_iniciado = 1;
         const em_analise = 2;
@@ -125,6 +127,4 @@
     }
 </style>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+

@@ -111,5 +111,19 @@ namespace unipaulistana.web.Controllers
         {
             return View();
         }
+
+
+        [Authorize(Policy="PermiteListarSolicitacao")]
+        public PartialViewResult  VisualizarItens(int solicitacaoID)
+        {
+            return PartialView("_solicitacaoItens",this.solicitacaoService.ObterPorSolicitacaoItens(solicitacaoID).OrderByDescending(x=> x.Data).ToList());
+        }
+
+
+        [Authorize(Policy="PermiteAlterarSolicitacao")]
+        public IActionResult AdicionarItem(SolicitacaoItem solicitacaoItem)
+        {
+            return View();
+        }
     }
 }

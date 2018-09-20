@@ -32,6 +32,19 @@ namespace unipaulistana.model
             return cmd.ExecuteNonQuery();
         }
 
+        public void AdicionarItem(SolicitacaoItem solicitacaoItem, int usuarioID)
+        {
+            string query = @"insert into dbo.solicitacaoItem (SolicitacaoID, Data, Descricao, usuarioID) 
+                                        values (@SolicitacaoID, @Data, @Descricao, @usuarioID)";
+            
+            var cmd = new SqlCommand(query, this.conexao.ObterConexao());
+            cmd.Parameters.Add("@SolicitacaoID", SqlDbType.DateTime, 255).Value = solicitacaoItem.SolicitacaoID;
+            cmd.Parameters.Add("@Data", SqlDbType.VarChar, 8000).Value = DateTime.Now;
+            cmd.Parameters.Add("@Descricao", SqlDbType.Int).Value = solicitacaoItem.Descricao;
+            cmd.Parameters.Add("@usuarioID", SqlDbType.Int).Value = usuarioID;
+            cmd.ExecuteNonQuery();
+        }
+
         public void Atualizar(Solicitacao solicitacao)
         {
             string query = string.Format(@"update dbo.solicitacao 
@@ -115,6 +128,31 @@ namespace unipaulistana.model
                                                 sqlDataReader["NomeSolicitante"].ToString());
             }
             return solicitacao;
+        }
+
+        public IEnumerable<SolicitacaoItem> ObterPorSolicitacaoItens(int solicitacaoID)
+        {
+            string sql = string.Format(@"select a.SolicitacaoID,
+                                            a.solicitacaoItemID,
+                                            a.SolicitacaoID,
+                                            a.Data,
+                                            a.Descricao,
+                                            a.usuarioID,
+                                            b.Nome as NomeUsuario
+                                        from solicitacaoItem a
+                                        inner join usuario b on (a.usuarioID = b.usuarioID) where a.SolicitacaoID={0}", solicitacaoID);
+            var cmd = new SqlCommand(sql, this.conexao.ObterConexao());
+            SqlDataReader sqlDataReader = cmd.ExecuteReader();
+
+            while (sqlDataReader.Read())
+            {
+                yield return new SolicitacaoItem( Convert.ToInt32(sqlDataReader["solicitacaoItemID"]),
+                                                Convert.ToInt32(sqlDataReader["SolicitacaoID"]),
+                                                Convert.ToDateTime(sqlDataReader["Data"]),
+                                                sqlDataReader["Descricao"].ToString(),
+                                                Convert.ToInt32(sqlDataReader["UsuarioID"]),
+                                                sqlDataReader["NomeUsuario"].ToString());
+            }
         }
 
         public IEnumerable<Solicitacao> ObterTodos()

@@ -11,5 +11,7 @@ namespace unipaulistana.model
         void Atualizar(Solicitacao solicitacao);
         void Excluir(int solicitacaoID);
         void Concluir(int solicitacaoID);
+        IEnumerable<SolicitacaoItem> ObterPorSolicitacaoItens(int solicitacaoID);
+        void AdicionarItem(SolicitacaoItem solicitacaoItem, int usuarioID);
     } 
 }

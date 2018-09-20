@@ -40,5 +40,13 @@ namespace unipaulistana.model
         {
             this.repository.Concluir(solicitacaoID);
         }
+
+        public IEnumerable<SolicitacaoItem> ObterPorSolicitacaoItens(int solicitacaoID)
+            => this.repository.ObterPorSolicitacaoItens(solicitacaoID);
+
+        public void AdicionarItem(SolicitacaoItem solicitacaoItem, int usuarioID)
+        {
+            this.repository.AdicionarItem(solicitacaoItem, usuarioID);
+        }
     }
 }

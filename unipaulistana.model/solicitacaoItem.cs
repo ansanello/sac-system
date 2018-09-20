@@ -7,21 +7,37 @@ namespace unipaulistana.model
     {
         public SolicitacaoItem(){}
 
-        public SolicitacaoItem(int solicitacaoItemID, 
-                                int solicitacaoID, 
-                                string descricao,
-                                int usuarioID)
+        public SolicitacaoItem(int solicitacaoID, 
+                               string descricao,
+                               int usuarioID)
         {
-            this.SolicitacaoItemID = solicitacaoID;
             this.SolicitacaoID = solicitacaoID;
             this.Descricao = descricao;
             this.UsuarioID = usuarioID;
+        }
+
+        public SolicitacaoItem(int solicitacaoItemID, 
+                                int solicitacaoID, 
+                                DateTime data,
+                                string descricao,
+                                int usuarioID,
+                                string nomeUsuario)
+        {
+            this.SolicitacaoItemID = solicitacaoID;
+            this.SolicitacaoID = solicitacaoID;
+            this.Data = data;
+            this.Descricao = descricao;
+            this.UsuarioID = usuarioID;
+            this.NomeUsuario = nomeUsuario;
         }
 
         public int SolicitacaoItemID { get; set; }
 
         [Display(Name="Protocolo")]
         public int SolicitacaoID { get; set; }
+        
+        public string NomeUsuario { get; set; }
+        
         public DateTime Data { get; set; }
 
         [Display(Name="Descrição")]
