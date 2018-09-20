@@ -23,18 +23,15 @@
                     <th>Data</th>                      
                     <th>Usuário</th>                      
                     <th>Descrição</th>                      
-                    <th></th>  
                 </tr>  
             </thead>  
             <tbody>  
-                @foreach (var item in Model)  
+                @foreach (var item in Model.OrderByDescending(x=> x.Data))  
                 {  
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.Data)</td>    
                         <td>@Html.DisplayFor(modelItem => item.NomeUsuario)</td>  
                         <td>@Html.DisplayFor(modelItem => item.Descricao)</td>  
-                        <td>  
-                        </td>  
                     </tr>  
                 }  
             </tbody>  

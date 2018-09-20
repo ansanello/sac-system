@@ -36,7 +36,7 @@ namespace unipaulistana.web.Controllers
         readonly IDepartamentoService departamentoService;
         readonly IHostingEnvironment hostingEnvironment;
 
-        [Authorize(Policy="PermiteListarSolicitacao")]
+        [Authorize(Policy = "PermiteListarSolicitacao")]
         public IActionResult Index()
         {
             if (TempData["mensagemIndex"] != null)
@@ -44,10 +44,10 @@ namespace unipaulistana.web.Controllers
                 ViewBag.Sucesso = TempData["mensagemIndex"];
             }
 
-            return View(this.solicitacaoService.ObterTodos());
+            return View(this.solicitacaoService.ObterStatusEmAbertoPorUsuario(User.GetUserID()));
         }
 
-        [Authorize(Policy="PermiteCriarSolicitacao")]
+        [Authorize(Policy = "PermiteCriarSolicitacao")]
         public IActionResult Criar()
         {
             AtualizarListas();
@@ -69,8 +69,8 @@ namespace unipaulistana.web.Controllers
                 return View(dados);
             }
         }
-       
-        [Authorize(Policy="PermiteAlterarSolicitacao")]
+
+        [Authorize(Policy = "PermiteAlterarSolicitacao")]
         public IActionResult Alterar(int id)
         {
             if (TempData["mensagemEdicao"] != null)
@@ -106,24 +106,21 @@ namespace unipaulistana.web.Controllers
             ViewBag.ListarUsuarios = this.usuarioService.ObterTodos();
         }
 
-        [Authorize(Policy="PermiteConcluirSolicitacao")]
+        [Authorize(Policy = "PermiteConcluirSolicitacao")]
         public IActionResult ConcluirSolicitacao(int id)
         {
             return View();
         }
 
 
-        [Authorize(Policy="PermiteListarSolicitacao")]
-        public PartialViewResult  VisualizarItens(int solicitacaoID)
-        {
-            return PartialView("_solicitacaoItens",this.solicitacaoService.ObterPorSolicitacaoItens(solicitacaoID).OrderByDescending(x=> x.Data).ToList());
-        }
-
-
-        [Authorize(Policy="PermiteAlterarSolicitacao")]
+        [HttpPost]
+        [Authorize(Policy = "PermiteAlterarSolicitacao")]
         public IActionResult AdicionarItem(SolicitacaoItem solicitacaoItem)
         {
-            return View();
+            if (!string.IsNullOrEmpty(solicitacaoItem.Descricao))
+                this.solicitacaoService.AdicionarItem(solicitacaoItem, User.GetUserID());
+                
+            return RedirectToAction("Alterar", new { id = solicitacaoItem.SolicitacaoID });
         }
     }
 }

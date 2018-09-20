@@ -7,9 +7,9 @@ namespace LoginViewComponent
     using unipaulistana.model;
     using System.Linq;
 
-    public class SolicitacaoItensViewComponent : ViewComponent
+    public class SolicitacaoItensInserirViewComponent : ViewComponent
     {
-        public SolicitacaoItensViewComponent(ISolicitacaoService solicitacaoService)
+        public SolicitacaoItensInserirViewComponent(ISolicitacaoService solicitacaoService)
         {
             this.solicitacaoService = solicitacaoService;
         }
@@ -18,7 +18,7 @@ namespace LoginViewComponent
 
         public async Task<IViewComponentResult> InvokeAsync(int solicitacaoID)
         {
-           return View("_solicitacaoItens", this.solicitacaoService.ObterPorSolicitacaoItens(solicitacaoID).OrderByDescending(x=> x.Data).ToList());
+           return View("_solicitacaoItensInserir", new SolicitacaoItem(solicitacaoID));
         }
     }
 }

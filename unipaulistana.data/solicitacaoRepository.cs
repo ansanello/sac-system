@@ -38,9 +38,9 @@ namespace unipaulistana.model
                                         values (@SolicitacaoID, @Data, @Descricao, @usuarioID)";
             
             var cmd = new SqlCommand(query, this.conexao.ObterConexao());
-            cmd.Parameters.Add("@SolicitacaoID", SqlDbType.DateTime, 255).Value = solicitacaoItem.SolicitacaoID;
-            cmd.Parameters.Add("@Data", SqlDbType.VarChar, 8000).Value = DateTime.Now;
-            cmd.Parameters.Add("@Descricao", SqlDbType.Int).Value = solicitacaoItem.Descricao;
+            cmd.Parameters.Add("@SolicitacaoID", SqlDbType.Int).Value = solicitacaoItem.SolicitacaoID;
+            cmd.Parameters.Add("@Data", SqlDbType.DateTime).Value = DateTime.Now;
+            cmd.Parameters.Add("@Descricao", SqlDbType.VarChar, 8000).Value = solicitacaoItem.Descricao;
             cmd.Parameters.Add("@usuarioID", SqlDbType.Int).Value = usuarioID;
             cmd.ExecuteNonQuery();
         }
@@ -176,6 +176,50 @@ namespace unipaulistana.model
                                         inner join cliente c on (a.clienteID = c.ClienteID)
                                         inner join departamento d on (a.departamentoID = d.departamentoID)
                                         inner join usuario e on (a.usuarioID = e.usuarioID)", this.conexao.ObterConexao());
+
+            SqlDataReader sqlDataReader = cmd.ExecuteReader();
+
+            while (sqlDataReader.Read())
+                yield return new Solicitacao( Convert.ToInt32(sqlDataReader["SolicitacaoID"]),
+                                                sqlDataReader["Descricao"].ToString(),
+                                                Convert.ToDateTime(sqlDataReader["DataDeCriacao"]),
+                                                sqlDataReader["DataDeConclusao"],
+                                                Convert.ToBoolean(sqlDataReader["Concluido"]),
+                                                Convert.ToInt32(sqlDataReader["ClienteID"]),
+                                                Convert.ToInt32(sqlDataReader["departamentoID"]),
+                                                Convert.ToInt32(sqlDataReader["UsuarioID"]),
+                                                Convert.ToInt32(sqlDataReader["SolicitanteID"]),
+                                                (StatusSolicitacao)Convert.ToInt32(sqlDataReader["Status"]),
+                                                sqlDataReader["NomeUsuario"].ToString(),
+                                                sqlDataReader["NomeCliente"].ToString(),
+                                                sqlDataReader["NomeDepartamento"].ToString(),
+                                                sqlDataReader["NomeSolicitante"].ToString());
+
+        }
+
+        public IEnumerable<Solicitacao> ObterStatusEmAbertoPorUsuario(int usuarioID)
+        {
+           var cmd = new SqlCommand(string.Format(@"select a.SolicitacaoID,
+                                            a.DataDeCriacao,
+                                            a.DataDeConclusao,
+                                            a.Descricao,
+                                            a.ClienteID,
+                                            a.DepartamentoID,
+                                            a.UsuarioID,
+                                            a.SolicitanteID,
+                                            a.Concluido, 
+                                            a.Status,
+                                            b.Nome as NomeUsuario,
+                                            c.Nome as NomeCliente,
+                                            d.Nome as NomeDepartamento,
+                                            d.Nome as NomeSolicitante
+                                        from solicitacao a
+                                        inner join usuario b on (a.usuarioID = b.usuarioID)
+                                        inner join cliente c on (a.clienteID = c.ClienteID)
+                                        inner join departamento d on (a.departamentoID = d.departamentoID)
+                                        inner join usuario e on (a.usuarioID = e.usuarioID) 
+                                        where a.status in(1,2,3)   
+                                        and a.usuarioID={0}",usuarioID), this.conexao.ObterConexao());
 
             SqlDataReader sqlDataReader = cmd.ExecuteReader();
 

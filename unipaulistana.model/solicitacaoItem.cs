@@ -16,6 +16,11 @@ namespace unipaulistana.model
             this.UsuarioID = usuarioID;
         }
 
+        public SolicitacaoItem(int solicitacaoID)
+        {
+            this.SolicitacaoID = solicitacaoID;
+        }
+
         public SolicitacaoItem(int solicitacaoItemID, 
                                 int solicitacaoID, 
                                 DateTime data,

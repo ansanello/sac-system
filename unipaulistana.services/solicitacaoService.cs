@@ -48,5 +48,8 @@ namespace unipaulistana.model
         {
             this.repository.AdicionarItem(solicitacaoItem, usuarioID);
         }
+
+        public IEnumerable<Solicitacao> ObterStatusEmAbertoPorUsuario(int usuarioID)
+            => this.repository.ObterStatusEmAbertoPorUsuario(usuarioID);
     }
 }

@@ -13,5 +13,6 @@ namespace unipaulistana.model
         void Concluir(int solicitacaoID);
         IEnumerable<SolicitacaoItem> ObterPorSolicitacaoItens(int solicitacaoID);
         void AdicionarItem(SolicitacaoItem solicitacaoItem, int usuarioID);
+        IEnumerable<Solicitacao> ObterStatusEmAbertoPorUsuario(int usuarioID);
     } 
 }
