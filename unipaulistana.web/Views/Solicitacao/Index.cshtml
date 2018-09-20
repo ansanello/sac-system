@@ -107,9 +107,22 @@
                         <td>@item.Descricao</td>  
                         <td>  
                             @if(User.HasPermission("PermiteAlterarSolicitacao")){
-                                <a id="editarUsuario" asp-action="Alterar" asp-route-id= "@item.SolicitacaoID" class="btn btn-info">  
+                                
+                                if((int)item.Status == 4)
+                                {
+                                    <a id="editarUsuario" asp-action="Alterar" asp-route-id= "@item.SolicitacaoID" class="btn btn-info">  
+                                    <i class="glyphicon glyphicon-pencil"></i>  Visualizar  
+                                </a>
+
+                                }
+                                else
+                                {
+<a id="editarUsuario" asp-action="Alterar" asp-route-id= "@item.SolicitacaoID" class="btn btn-info">  
                                     <i class="glyphicon glyphicon-pencil"></i>  Alterar  
                                 </a>
+                                }
+                                
+                                
                             }
                         </td>  
                     </tr>  
