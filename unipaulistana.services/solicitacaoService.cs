@@ -5,12 +5,14 @@ namespace unipaulistana.model
 
     public class SolicitacaoService : ISolicitacaoService
     {
-        public SolicitacaoService(ISolicitacaoRepository repository)
+        public SolicitacaoService(ISolicitacaoRepository repository, IUsuarioRepository usuarioRepository)
         {
             this.repository = repository;
+            this.usuarioRepository = usuarioRepository;
         }
 
         readonly ISolicitacaoRepository repository;
+        readonly IUsuarioRepository usuarioRepository;
 
         public IEnumerable<Solicitacao> ObterTodos()
             => this.repository.ObterTodos();
@@ -28,6 +30,10 @@ namespace unipaulistana.model
 
         public void Atualizar(Solicitacao solicitacao)
         {
+            AlteracaoDeUsuario AlteracaoDeUsuario = this.TeveAlteracaoDeUsuario(solicitacao);
+            if (AlteracaoDeUsuario.TeveAlteracao)
+                this.InserirItemTrocaDeUsuario(AlteracaoDeUsuario.Solicitacao, solicitacao);
+
             this.repository.Atualizar(solicitacao);
         } 
 
@@ -51,5 +57,23 @@ namespace unipaulistana.model
 
         public IEnumerable<Solicitacao> ObterStatusEmAbertoPorUsuario(int usuarioID)
             => this.repository.ObterStatusEmAbertoPorUsuario(usuarioID);
+
+
+        public AlteracaoDeUsuario TeveAlteracaoDeUsuario(Solicitacao dados)
+        {
+            Solicitacao solicitacao = this.repository.ObterPorID(dados.SolicitacaoID);
+            return new AlteracaoDeUsuario(solicitacao.UsuarioID != dados.UsuarioID, solicitacao);
+        }
+
+        public void InserirItemTrocaDeUsuario(Solicitacao solicitacaoAtual, Solicitacao solicitacaoNova)
+        {
+            Usuario usuarioSolicitacaoAtual = this.usuarioRepository.ObterPorID(solicitacaoAtual.UsuarioID);
+            Usuario usuarioSolicitacaoNova = this.usuarioRepository.ObterPorID(solicitacaoNova.UsuarioID);
+
+            string descricao = string.Format("tarefa repassada do usuário {0} para o usuário {1}", usuarioSolicitacaoAtual.Nome, usuarioSolicitacaoNova.Nome);
+
+            var solicitacaoItem = new SolicitacaoItem(solicitacaoAtual.SolicitacaoID, descricao, solicitacaoAtual.UsuarioID);
+            this.AdicionarItem(solicitacaoItem, solicitacaoAtual.UsuarioID);
+        }
     }
 }
