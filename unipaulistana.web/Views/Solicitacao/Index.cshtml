@@ -1,9 +1,40 @@
-﻿@model IEnumerable<unipaulistana.model.Solicitacao>  
+﻿@model unipaulistana.model.SolicitacaoPesquisar
 @using unipaulistana.web.extensions
 
 <br/>
 
+<div class="content">
+	<div class="module">
+		<div class="module-head">
+			<h3>Pesquisar</h3>
+		</div>
+		<div class="module-body">
+			<form asp-action="Index" class="form-horizontal row-fluid">
+                <div class="control-group">
+					<label class="control-label" asp-for="Status">Status</label>
+					<div class="controls">
+						        <select class="form-dropdown"  asp-for="Status" asp-items="Html.GetEnumSelectList<unipaulistana.model.StatusSolicitacao>()">
+                                </select>
+						<span asp-validation-for="Status" class="text-danger"></span>
+					</div>
+				</div>
+				
+		
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" class="btn btn-primary">Pesquisar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>				
+</div><!--/.content-->
+
+<br/>
+
+
 @Html.Partial("_ErrorSummary")
+
 
 <div class="top-buffer"></div>  
 <div class="panel panel-primary">  
@@ -18,7 +49,6 @@
         }
         <br/>
         <br/>
-        
 
         <div class="module">
 					
@@ -36,47 +66,41 @@
                 </tr>  
             </thead>  
             <tbody>  
-                @foreach (var item in Model)  
+                @foreach (var item in ViewBag.ListarSolicitacoes)  
                 {  
                     <tr >  
-                        <td>@Html.DisplayFor(modelItem => item.DataDeCriacao)</td>  
-                        <td>@Html.DisplayFor(modelItem => item.NomeCliente)</td>  
-                        <td>@Html.DisplayFor(modelItem => item.NomeUsuario)</td>  
-                        <td>@Html.DisplayFor(modelItem => item.NomeDepartamento)</td>  
+                        <td>@item.DataDeCriacao</td>  
+                        <td>@item.NomeCliente</td>  
+                        <td>@item.NomeUsuario</td>  
+                        <td>@item.NomeDepartamento</td>  
                         
                         @if((int)item.Status == 1)
                         {
-                            <td><span style="color:red">@Html.DisplayFor(modelItem => item.Status)</span></td>  
+                            <td><span style="color:red">Não iniciado</span></td>  
                         }
                         else if((int)item.Status == 2)
                         {
-                            <td><span style="color:blue">@Html.DisplayFor(modelItem => item.Status)</span></td>  
+                            <td><span style="color:blue">em analise</span></td>  
                         } 
                         else if((int)item.Status == 3)
                         {
-                            <td><span style="color:orange">@Html.DisplayFor(modelItem => item.Status)</span></td>  
+                            <td><span style="color:orange">Em andamento</span></td>  
                         } 
                         else if((int)item.Status == 4)
                         {
-                            <td><span style="color:green">@Html.DisplayFor(modelItem => item.Status)</span></td>  
+                            <td><span style="color:green">Concluído</span></td>  
                         } 
                         else
                         {
-                            <td><span style="color:blue">@Html.DisplayFor(modelItem => item.Status)</span></td>  
+                            <td><span style="color:blue">Não cadastrado</span></td>  
                         }
                         
-                        <td>@Html.DisplayFor(modelItem => item.Descricao)</td>  
+                        <td>@item.Descricao</td>  
                         <td>  
                             @if(User.HasPermission("PermiteAlterarSolicitacao")){
                                 <a id="editarUsuario" asp-action="Alterar" asp-route-id= "@item.SolicitacaoID" class="btn btn-info">  
                                     <i class="glyphicon glyphicon-pencil"></i>  Alterar  
                                 </a>
-                            }
-
-                            @if(User.HasPermission("PermiteAlterarSolicitacao")){
-                                <a id="AlterarSenhaUsuario" asp-action="AlterarSenhaViaAdmin" asp-route-id= "@item.SolicitacaoID" class="btn btn-warning">  
-                                    <i class="glyphicon glyphicon-pencil"></i>  Alterar senha 
-                                </a>  
                             }
                         </td>  
                     </tr>  

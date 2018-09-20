@@ -75,17 +75,26 @@
 					</div>
 				</div>
 			
-				<div class="control-group">
-					<div class="controls">
-						<button type="submit" class="btn">Salvar</button>
+				@if((int)Model.Status != 4)
+				{
+					<div class="control-group">
+						<div class="controls">
+							<button type="submit" class="btn">Salvar</button>
+						</div>
 					</div>
-				</div>
+				}
+
+				
 			</form>
 		</div>
 	</div>				
 </div><!--/.content-->
 
-@await Component.InvokeAsync("SolicitacaoItensInserir", new { solicitacaoID = Model.SolicitacaoID })
+	@if((int)Model.Status != 4)
+	{
+		@await Component.InvokeAsync("SolicitacaoItensInserir", new { solicitacaoID = Model.SolicitacaoID })
+	}
+
 @await Component.InvokeAsync("SolicitacaoItens", new { solicitacaoID = Model.SolicitacaoID })
 
 <script>

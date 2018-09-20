@@ -240,5 +240,50 @@ namespace unipaulistana.model
                                                 sqlDataReader["NomeSolicitante"].ToString());
 
         }
+
+        public IEnumerable<Solicitacao> Filtrar(SolicitacaoPesquisar pesquisar)
+        {
+            string sql = string.Format(@"select a.SolicitacaoID,
+                                            a.DataDeCriacao,
+                                            a.DataDeConclusao,
+                                            a.Descricao,
+                                            a.ClienteID,
+                                            a.DepartamentoID,
+                                            a.UsuarioID,
+                                            a.SolicitanteID,
+                                            a.Concluido, 
+                                            a.Status,
+                                            b.Nome as NomeUsuario,
+                                            c.Nome as NomeCliente,
+                                            d.Nome as NomeDepartamento,
+                                            d.Nome as NomeSolicitante
+                                        from solicitacao a
+                                        inner join usuario b on (a.usuarioID = b.usuarioID)
+                                        inner join cliente c on (a.clienteID = c.ClienteID)
+                                        inner join departamento d on (a.departamentoID = d.departamentoID)
+                                        inner join usuario e on (a.usuarioID = e.usuarioID) 
+                                        where status={0}",(int)pesquisar.Status);
+
+           var cmd = new SqlCommand(sql, this.conexao.ObterConexao());
+
+            SqlDataReader sqlDataReader = cmd.ExecuteReader();
+
+            while (sqlDataReader.Read())
+                yield return new Solicitacao( Convert.ToInt32(sqlDataReader["SolicitacaoID"]),
+                                                sqlDataReader["Descricao"].ToString(),
+                                                Convert.ToDateTime(sqlDataReader["DataDeCriacao"]),
+                                                sqlDataReader["DataDeConclusao"],
+                                                Convert.ToBoolean(sqlDataReader["Concluido"]),
+                                                Convert.ToInt32(sqlDataReader["ClienteID"]),
+                                                Convert.ToInt32(sqlDataReader["departamentoID"]),
+                                                Convert.ToInt32(sqlDataReader["UsuarioID"]),
+                                                Convert.ToInt32(sqlDataReader["SolicitanteID"]),
+                                                (StatusSolicitacao)Convert.ToInt32(sqlDataReader["Status"]),
+                                                sqlDataReader["NomeUsuario"].ToString(),
+                                                sqlDataReader["NomeCliente"].ToString(),
+                                                sqlDataReader["NomeDepartamento"].ToString(),
+                                                sqlDataReader["NomeSolicitante"].ToString());
+
+        }
     }
 }

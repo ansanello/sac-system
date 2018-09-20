@@ -35,6 +35,8 @@ namespace unipaulistana.model
                 this.InserirItemTrocaDeUsuario(AlteracaoDeUsuario.Solicitacao, solicitacao);
 
             this.repository.Atualizar(solicitacao);
+            if(solicitacao.EstaFinalizada())
+                this.Concluir(solicitacao.SolicitacaoID);
         } 
 
         public void Excluir(int solicitacaoID)
@@ -75,5 +77,8 @@ namespace unipaulistana.model
             var solicitacaoItem = new SolicitacaoItem(solicitacaoAtual.SolicitacaoID, descricao, solicitacaoAtual.UsuarioID);
             this.AdicionarItem(solicitacaoItem, solicitacaoAtual.UsuarioID);
         }
+
+        public IEnumerable<Solicitacao> Filtrar(SolicitacaoPesquisar pesquisar)
+            => this.repository.Filtrar(pesquisar);
     }
 }

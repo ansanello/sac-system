@@ -44,7 +44,16 @@ namespace unipaulistana.web.Controllers
                 ViewBag.Sucesso = TempData["mensagemIndex"];
             }
 
-            return View(this.solicitacaoService.ObterStatusEmAbertoPorUsuario(User.GetUserID()));
+            ViewBag.ListarSolicitacoes = this.solicitacaoService.ObterStatusEmAbertoPorUsuario(User.GetUserID());
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult Index(SolicitacaoPesquisar solicitacaoPesquisar)
+        {
+            ViewBag.ListarSolicitacoes = this.solicitacaoService.Filtrar(solicitacaoPesquisar);
+            return View();
         }
 
         [Authorize(Policy = "PermiteCriarSolicitacao")]

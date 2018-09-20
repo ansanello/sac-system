@@ -65,6 +65,9 @@ namespace unipaulistana.model
             this.Concluido = true;
         }
 
+        public bool EstaFinalizada()
+            => this.Status == StatusSolicitacao.concluido;
+
         [Display(Name="Protocolo")]
         public int SolicitacaoID { get; set; }
 
