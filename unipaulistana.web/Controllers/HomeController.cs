@@ -11,18 +11,23 @@
     using System.Security.Claims;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
+    using unipaulistana.web.extensions;
 
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        public HomeController(IUsuarioService usuarioService, IDiretivaSegurancaService diretivaSegurancaService)
+        public HomeController(IUsuarioService usuarioService, 
+                                IDiretivaSegurancaService diretivaSegurancaService,
+                                IDashboardService dashboardService)
         {
             this.usuarioService = usuarioService;
             this.diretivaSegurancaService = diretivaSegurancaService;
+            this.dashboardService = dashboardService;
         }
 
         readonly IUsuarioService usuarioService;
         readonly IDiretivaSegurancaService diretivaSegurancaService;
+        readonly IDashboardService dashboardService;
 
         public IActionResult Index()
         {
@@ -72,7 +77,16 @@
 
         public IActionResult Dashboard()
         {
+            this.carregarDadosDoDash();
             return View();
+        }
+
+        void carregarDadosDoDash()
+        {
+            Dashboard dash = this.dashboardService.DashboardUsuario(User.GetUserID());
+            ViewBag.TotalCliente = dash.TotalCliente;
+            ViewBag.TotalUsuario = dash.TotalUsuario;
+            ViewBag.totalSolicitacaoEmAberto = dash.TotalSolicitacaoEmAberto;
         }
 
         public IActionResult AcessoNegado()

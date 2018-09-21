@@ -49,6 +49,8 @@
             services.AddScoped<IDiretivaSegurancaService, DiretivaSegurancaService>();
             services.AddScoped<ISolicitacaoRepository, SolicitacaoRepository>();
             services.AddScoped<ISolicitacaoService, SolicitacaoService>();
+            services.AddScoped<IDashboardRepository, DashboardRepository>();
+            services.AddScoped<IDashboardService, DashboardService>();
 
             services.AddAuthorization(options => {
                
