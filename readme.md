@@ -1,23 +1,25 @@
-###### intalar nuget
+# Workflow
 
-https://www.nuget.org/downloads
+Esse sistema foi desenvolvido como um projeto de faculdade, o objetivo do sistema é gerenciar o fluxo de trabalho de 1 ou mais departamento de uma empresa.
 
-##### comandos nuget
-https://docs.microsoft.com/pt-br/nuget/tools/nuget-exe-cli-reference
+# referências
 
+-> instalação do nugget https://www.nuget.org/downloads
+-> exemplo de comandos nugget https://docs.microsoft.com/pt-br/nuget/tools/nuget-exe-cli-reference
+-> site que contém os pacotes nugget -> https://www.nuget.org/
 
-##### site dos pacotes nuget
-https://www.nuget.org/
+# Especificações do sistema
 
--- dotnet add package SqlConnection --version 1.0.2
+O sistema foi desenvolvido com ASP.NET Core 2.1 e SQL Server 2017.
+O sistema funciona em máquinas com SO Windows, Linux e MacOS.
+O sistema foi desenvolvido utilizando uma máquina Linux Ubuntu Desktop versão 18.
+O sistema foi desenvolvido com a ferramenta VSCode, mas você pode utilizar qualquer outra ferramenta de criação de arquivos e pode também usar o Visual Studio.
 
--- dotnet add package Microsoft.AspNetCore.Razor --version 2.2.0-preview1-35029
-
-######## comandos utilizados para a criação da aplicação
+# Abaixo segue a relação de comandos utilizados para criar a aplicação
 
 dotnet new sln -n unipaulistana.sac -> cria uma solução
 
-dotnet new mvc --name unipaulistana.web   -> criar o projeto web
+dotnet new razor -n unipaulistana.web -> cria um projeto do tipo razor page
 
 dotnet new classlib -n unipaulistana.model -> criação da dll de modelo
 
@@ -45,17 +47,14 @@ dotnet add unipaulistana.web/unipaulistana.web.csproj reference unipaulistana.se
 
 dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design --version 2.2.0-preview1-35029 -> adicionando scafolding ao projeto
 
+dotnet add package SqlConnection --version 1.0.2 -> adicionar na camada repository
 
 
-############################## comandos 
 
-dotnet sln unipaulistana.sac.sln remove ./unipaulistana.web/unipaulistana.web.csproj
 
-dotnet new razor -n unipaulistana.web -> cria um projeto do tipo razor page
 
-dotnet new xunit --name Reminders.Tests
 
-dotnet aspnet-codegenerator controller -name Cliente2Controller -m Cliente --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries
+
 
 
 
